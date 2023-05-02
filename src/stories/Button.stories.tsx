@@ -10,9 +10,15 @@ const noOp = () => {};
 
 const Template: ComponentStory<typeof Button> = (args: ButtonProps) => <Button {...args} />;
 
-export const PrimaryButton = Template.bind({});
+export const ComposableButton = Template.bind({});
 
-PrimaryButton.args = {
-  text: 'Primary Button',
+ComposableButton.args = {
+  text: 'Button',
   onClick: noOp,
+  title: 'Tooltip text',
+  size: 'md',
+  variant: 'primary',
+  colorTheme: 'default',
+  rounded: false,
+  disabled: false,
 };
