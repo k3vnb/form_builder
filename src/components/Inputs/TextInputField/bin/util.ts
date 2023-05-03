@@ -1,5 +1,5 @@
-import { Nullable } from '../../../var/types';
-import type { InputHelperTextProps } from './InputHelperText';
+import { Nullable } from '../../../../var/types';
+import type { InputHelperTextProps } from '../../bin/InputHelperText';
 
 type AriaDescrByArgs = Pick<InputHelperTextProps, 'id' | 'show' | 'isInvalid'>;
 
