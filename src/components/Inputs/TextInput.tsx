@@ -1,4 +1,5 @@
 import React from 'react';
+import { ExclamationCircleIcon } from '@heroicons/react/20/solid'
 import { Label } from '../Label';
 import { InputHelperText } from './bin';
 import { getAriaDescribedById, getTextInputAriaAttributes } from './bin/util';
@@ -39,11 +40,10 @@ export const TextInput = ({
   ...htmlInputProps
 }: TextInputProps): JSX.Element => {
 
-  const classNames: string = React.useMemo(() => getInputClassNames(invalid, readOnly), [invalid, readOnly]);
   const id = htmlInputProps.id ?? label;
-
   const showInvalid: boolean = React.useMemo(() => (touched && invalid), [touched, invalid]);
   const showHelperText: boolean = React.useMemo(() => (showInvalid || !!helperText), [showInvalid, helperText]);
+  const classNames: string = React.useMemo(() => getInputClassNames(showInvalid, readOnly), [showInvalid, readOnly]);
 
   const ariaDescribedById = React.useMemo(() => (
     getAriaDescribedById({ id, isInvalid: showInvalid, show: showHelperText })
@@ -56,7 +56,7 @@ export const TextInput = ({
   return (
     <div>
       <Label htmlFor={id} text={label} srOnly={hideLabel} required={required} />
-      <div className="mt-2">
+      <div className="relative mt-2 rounded-md">
         <input
           id={id}
           type={type}
@@ -70,6 +70,11 @@ export const TextInput = ({
           {...ariaAttributes}
           {...htmlInputProps}
         />
+       {showInvalid && (
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+            <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+          </div>
+        )}
       </div>
       <InputHelperText
         id={ariaDescribedById}
@@ -78,14 +83,14 @@ export const TextInput = ({
         text={errorText || helperText}
       />
     </div>
-  )
+  );
 }
 
-const getInputClassNames = (invalid: boolean, readOnly: boolean) => {
+const getInputClassNames = (showInvalid: boolean, readOnly: boolean) => {
   const baseStyles = styles.baseStyles;
 
   if (readOnly) return `${baseStyles} ${styles.readOnly}`;
-  if (invalid) return `${baseStyles} ${styles.invalid}`;
+  if (showInvalid) return `${baseStyles} ${styles.invalid}`;
   return `${baseStyles} ${styles.default}`;
 }
 
