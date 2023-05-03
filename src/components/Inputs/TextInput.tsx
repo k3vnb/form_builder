@@ -18,10 +18,10 @@ export interface TextInputProps extends HTMLInputProps {
   hideLabel?: boolean;
   errorText?: string;
   helperText?: string;
-  onChange?: (value: string) => void | undefined;
   onBlur?: () => void | undefined;
+  onFocus?: () => void | undefined;
+  onChange?: (value: string) => void | undefined;
 }
-
 
 export const TextInput = ({
   type = 'text',
@@ -32,8 +32,9 @@ export const TextInput = ({
   errorText = '',
   hideLabel = false,
   invalid = false,
-  onChange = () => {},
   onBlur = () => {},
+  onFocus = () => {},
+  onChange = () => {},
   required = false,
   disabled = false,
   readOnly = false,
@@ -65,6 +66,7 @@ export const TextInput = ({
           value={value ?? ''}
           onChange={e => onChange(e.target.value)}
           onBlur={onBlur}
+          onFocus={onFocus}
           disabled={disabled}
           readOnly={readOnly}
           {...ariaAttributes}
