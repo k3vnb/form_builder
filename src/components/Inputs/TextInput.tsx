@@ -4,7 +4,7 @@ import { Label } from '../Label';
 import { InputHelperText } from './bin';
 import { getAriaDescribedById, getTextInputAriaAttributes } from './bin/util';
 
-type HTMLInputProps = Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange' | 'onBlur'>;
+type HTMLInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
 
 export interface TextInputProps extends HTMLInputProps {
   type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'search';
