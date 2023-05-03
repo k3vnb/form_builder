@@ -29,6 +29,11 @@ const Template: ComponentStory<typeof TextInput> = ({ value, invalid, ...args }:
     clearErrorText(args.errorText || '', val)
   ), [args.errorText, val]);
 
+  const isInvalid = React.useMemo(() => (
+    (args.required && !val) || (invalid && !shouldClearInvalid)
+  ), [args.required, val, invalid, shouldClearInvalid]);
+
+
   React.useEffect(() => {
     setVal(value ?? '');
   }, [value]);
@@ -37,7 +42,7 @@ const Template: ComponentStory<typeof TextInput> = ({ value, invalid, ...args }:
     <div className='w-64'>
       <TextInput
         {...args}
-        invalid={invalid && !shouldClearInvalid}
+        invalid={isInvalid}
         value={val}
         onChange={setVal}
         touched={touched}
@@ -57,3 +62,11 @@ InvalidTextInput.args = {
   touched: true,
   value: 'Not taco cat',
 };
+
+export const RequiredTextInput = Template.bind({});
+
+RequiredTextInput.args = {
+  required: true,
+  errorText: 'This field cannot be blank.',
+};
+

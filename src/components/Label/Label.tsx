@@ -6,14 +6,23 @@ export interface LabelProps extends React.HTMLAttributes<HTMLLabelElement> {
 }
 
 export const Label = ({ text, htmlFor, srOnly = false, required = false }: LabelProps) => {
-  const classNames = srOnly ? 'sr-only' : styles.label;
+  if (srOnly) return <label htmlFor={htmlFor} className="sr-only">{text}</label>;
+
   return (
-    <label htmlFor={htmlFor} className={classNames}>
-      {text} {required && <span className='align-super'>*</span>}
-    </label>
-  )
-  };
+    <div className="flex justify-between">
+      <label htmlFor={htmlFor} className={styles.label}>
+        {text}
+      </label>
+      {required && (
+        <span className={styles.cornerText}>
+          Required
+        </span>
+      )}
+    </div>
+  );
+};
 
 const styles ={
+  cornerText: 'text-sm leading-6 text-gray-500',
   label: 'block text-sm font-medium leading-6 text-gray-900',
 }
