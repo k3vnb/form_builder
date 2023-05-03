@@ -1,6 +1,9 @@
+import React from 'react';
+
 export interface LabelProps extends React.HTMLAttributes<HTMLLabelElement> {
-  htmlFor: string;
   text: string;
+  htmlFor: string;
+  inline?: boolean;
   srOnly?: boolean;
   required?: boolean;
 }

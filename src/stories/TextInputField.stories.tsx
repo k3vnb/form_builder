@@ -1,10 +1,10 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { TextInput, TextInputProps } from '../components/Inputs';
+import { TextInputField, TextInputFieldProps } from '../components/Inputs';
 
 export default {
-  title: 'Form/TextInput',
-  component: TextInput,
+  title: 'Form/TextInputField',
+  component: TextInputField,
   args: {
     type: 'text',
     label: 'Label',
@@ -13,15 +13,17 @@ export default {
     required: false,
     readOnly: false,
     disabled: false,
+    hideLabel: false,
+    inlineLabel: false,
     placeholder: 'Enter your text...',
   },
-} as ComponentMeta<typeof TextInput>;
+} as ComponentMeta<typeof TextInputField>;
 
 const validText = 'taco cat';
 const errorText = `Value must be "${validText}".`;
 const clearErrorText = (errText: string, val:string): boolean => (errText === errorText && val === validText);
 
-const Template: ComponentStory<typeof TextInput> = ({ value, invalid, ...args }: TextInputProps) => {
+const Template: ComponentStory<typeof TextInputField> = ({ value, invalid, ...args }: TextInputFieldProps) => {
   const [val, setVal] = React.useState<string>(value ?? '');
   const [touched, setTouched] = React.useState<boolean>(args.touched ?? false);
   
@@ -40,7 +42,7 @@ const Template: ComponentStory<typeof TextInput> = ({ value, invalid, ...args }:
 
   return (
     <div className='w-64'>
-      <TextInput
+      <TextInputField
         {...args}
         invalid={isInvalid}
         value={val}
@@ -52,20 +54,20 @@ const Template: ComponentStory<typeof TextInput> = ({ value, invalid, ...args }:
   );
 };
 
-export const DefaultTextInput = Template.bind({});
+export const DefaultTextInputField = Template.bind({});
 
-export const InvalidTextInput = Template.bind({});
+export const InvalidTextInputField = Template.bind({});
 
-InvalidTextInput.args = {
+InvalidTextInputField.args = {
   errorText,
   invalid: true,
   touched: true,
   value: 'Not taco cat',
 };
 
-export const RequiredTextInput = Template.bind({});
+export const RequiredTextInputField = Template.bind({});
 
-RequiredTextInput.args = {
+RequiredTextInputField.args = {
   required: true,
   errorText: 'This field cannot be blank.',
 };

@@ -6,7 +6,7 @@ import { getAriaDescribedById, getTextInputAriaAttributes } from './bin/util';
 
 type HTMLInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
 
-export interface TextInputProps extends HTMLInputProps {
+export interface TextInputFieldProps extends HTMLInputProps {
   type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'search';
   value?: string;
   label?: string;
@@ -15,6 +15,7 @@ export interface TextInputProps extends HTMLInputProps {
   disabled?: boolean;
   readOnly?: boolean;
   required?: boolean;
+  inlineLabel?: boolean;
   hideLabel?: boolean;
   errorText?: string;
   helperText?: string;
@@ -23,23 +24,24 @@ export interface TextInputProps extends HTMLInputProps {
   onChange?: (value: string) => void | undefined;
 }
 
-export const TextInput = ({
+export const TextInputField = ({
   type = 'text',
   value = '',
   label = '',
   touched = false,
+  invalid = false,
+  disabled = false,
+  required = false,
+  readOnly = false,
   helperText = '',
   errorText = '',
   hideLabel = false,
-  invalid = false,
+  inlineLabel = false,
   onBlur = () => {},
   onFocus = () => {},
   onChange = () => {},
-  required = false,
-  disabled = false,
-  readOnly = false,
   ...htmlInputProps
-}: TextInputProps): JSX.Element => {
+}: TextInputFieldProps): JSX.Element => {
 
   const id = htmlInputProps.id ?? label;
   const showInvalid: boolean = React.useMemo(() => (touched && invalid), [touched, invalid]);
