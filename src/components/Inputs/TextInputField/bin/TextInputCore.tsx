@@ -27,7 +27,7 @@ export const TextInput = ({
   const classNames: string = React.useMemo(() => getInputClassNames(invalid, readOnly, disabled), [invalid, readOnly, disabled]);
 
   return (
-    <div className="relative mt-2 rounded-md">
+    <div className="relative rounded-md">
       <input
         className={classNames}
         value={value ?? ''}

@@ -7,7 +7,7 @@ export default {
   component: TextInputField,
   args: {
     type: 'text',
-    label: 'Label',
+    label: 'Input Label',
     value: '',
     invalid: false,
     required: false,
@@ -41,7 +41,7 @@ const Template: ComponentStory<typeof TextInputField> = ({ value, invalid, ...ar
   }, [value]);
 
   return (
-    <div className='w-64'>
+    <div className='w-72'>
       <TextInputField
         {...args}
         invalid={isInvalid}

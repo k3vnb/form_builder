@@ -19,19 +19,15 @@ export const InputHelperText = ({
   children = null,
 }: InputHelperTextProps): JSX.Element => {
   const minHeight = '1.25rem'; // 20px -- matches tailwind default for 'text-sm'
-  let classNames = 'mt-2';
   
-  if (!show || !id) return <div className={classNames} style={{ minHeight }} />;
+  if (!show || !id) return <div style={{ minHeight }} />;
 
   const textColor = isInvalid ? 'text-red-600' : 'text-gray-500';
-  classNames = `${classNames} text-sm ${textColor}`;
+  const classNames = `text-sm ${textColor}`;
 
-  // TODO: assert both id and text/children are not null
-    
   return (
     <div id={id} className={classNames} style={{ minHeight }}>
       {text || children}
     </div>
   );
 }
-
