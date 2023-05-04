@@ -7,7 +7,7 @@ export default {
   component: TextInputField,
   args: {
     type: 'text',
-    label: 'Input Label',
+    label: 'Favorite Book',
     value: '',
     invalid: false,
     required: false,
@@ -15,17 +15,19 @@ export default {
     disabled: false,
     hideLabel: false,
     inlineLabel: false,
-    placeholder: 'Enter your text...',
+    placeholder: 'e.g., the Cat in the Hat',
   },
 } as ComponentMeta<typeof TextInputField>;
 
-const validText = 'taco cat';
+const validText = 'tacocat';
 const errorText = `Value must be "${validText}".`;
 const clearErrorText = (errText: string, val:string): boolean => (errText === errorText && val === validText);
 
 const Template: ComponentStory<typeof TextInputField> = ({ value, invalid, ...args }: TextInputFieldProps) => {
   const [val, setVal] = React.useState<string>(value ?? '');
   const [touched, setTouched] = React.useState<boolean>(args.touched ?? false);
+
+  const containerWidth = args.inlineLabel ? 'w-96' : 'w-72';
   
   const shouldClearInvalid = React.useMemo(() => (
     clearErrorText(args.errorText || '', val)
@@ -41,7 +43,7 @@ const Template: ComponentStory<typeof TextInputField> = ({ value, invalid, ...ar
   }, [value]);
 
   return (
-    <div className='w-72'>
+    <div className={containerWidth}>
       <TextInputField
         {...args}
         invalid={isInvalid}
@@ -55,20 +57,30 @@ const Template: ComponentStory<typeof TextInputField> = ({ value, invalid, ...ar
 };
 
 export const DefaultTextInputField = Template.bind({});
-
+export const DisabledTextInputField = Template.bind({});
 export const InvalidTextInputField = Template.bind({});
+export const ReadOnlyTextInputField = Template.bind({});
+export const RequiredTextInputField = Template.bind({});
 
 InvalidTextInputField.args = {
   errorText,
+  label: 'Favorite Palindrome',
   invalid: true,
   touched: true,
-  value: 'Not taco cat',
+  placeholder: 'e.g., toot',
+  value: 'kayak',
 };
 
-export const RequiredTextInputField = Template.bind({});
+DisabledTextInputField.args = {
+  disabled: true,
+};
+
+ReadOnlyTextInputField.args = {
+  readOnly: true,
+  value: 'Leaves of Grass',
+};
 
 RequiredTextInputField.args = {
   required: true,
   errorText: 'This field cannot be blank.',
 };
-
