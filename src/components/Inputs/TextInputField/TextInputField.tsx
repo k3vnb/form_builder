@@ -1,6 +1,6 @@
 import React from 'react';
 import { Label } from '../../Label';
-import { InputHelperText } from '../bin';
+import { InputHelperText, InputFieldLayout } from '../bin';
 import { getAriaDescribedById, getTextInputAriaAttributes } from './bin/util';
 import { TextInput, TextInputCoreProps } from './bin';
 
@@ -39,10 +39,6 @@ export const TextInputField = (props: TextInputFieldProps): JSX.Element => {
   const showInvalid: boolean = React.useMemo(() => (touched && invalid), [touched, invalid]);
   const showHelperText: boolean = React.useMemo(() => (showInvalid || !!helperText), [showInvalid, helperText]);
 
-  const containerClassNames = React.useMemo(() => (
-    inlineLabel ? styles.container.inlineLabel : styles.container.default
-  ), [inlineLabel]);
-
   const ariaDescribedById = React.useMemo(() => (
     getAriaDescribedById({ id, isInvalid: showInvalid, show: showHelperText })
   ), [id, showInvalid, showHelperText]);
@@ -52,15 +48,17 @@ export const TextInputField = (props: TextInputFieldProps): JSX.Element => {
   ), [ariaDescribedById, showInvalid]);
 
   return (
-    <div className={containerClassNames}>
-      <Label
-        text={label}
-        inline={inlineLabel}
-        htmlFor={id}
-        srOnly={hideLabel}
-        required={required}
-      />
-      <div className={styles.container.default}>
+    <InputFieldLayout.MainContainer inlineLabel={inlineLabel}>
+      <InputFieldLayout.LabelContainer inlineLabel={inlineLabel} hideLabel={hideLabel}>
+        <Label
+          text={label}
+          inline={inlineLabel}
+          htmlFor={id}
+          srOnly={hideLabel}
+          required={required}
+        />
+      </InputFieldLayout.LabelContainer>
+      <InputFieldLayout.InputContainer inlineLabel={inlineLabel} hideLabel={hideLabel}>
         <TextInput
           id={id}
           type={type}
@@ -81,15 +79,7 @@ export const TextInputField = (props: TextInputFieldProps): JSX.Element => {
           isInvalid={showInvalid}
           text={errorText || helperText}
         />
-      </div>
-    </div>
+      </InputFieldLayout.InputContainer>
+    </InputFieldLayout.MainContainer>
   );
 }
-
-const styles = {
-  container: {
-    default: 'flex flex-col gap-2',
-    inlineLabel: 'flex items-baseline gap-x-2.5',
-  },
-}
-

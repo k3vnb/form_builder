@@ -38,10 +38,10 @@ export const Label = ({
 
 const styles ={
   container: {
-    default: 'flex justify-between gap-x-1',
-    inlineLabel: 'flex w-1/3 min-w-max gap-x-1.5',
+    default: 'flex justify-between items-end gap-x-1',
+    inlineLabel: 'flex gap-x-1.5 whitespace-pre-wrap',
   },
-  label: 'block text-sm font-bold leading-6 text-gray-700',
+  label: 'block text-sm font-bold leading-6 text-gray-700 text-wrap',
   requiredText: {
     default: 'text-sm leading-6 text-gray-500',
     inline: 'align-super text-xl leading-6 text-indigo-500 -mt-0.5',
