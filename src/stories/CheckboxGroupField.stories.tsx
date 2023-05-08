@@ -14,6 +14,7 @@ export default {
     readOnly: false,
     disabled: false,
     hideLegend: false,
+    showDividers: true,
     inlineLegend: false,
     options: [
       { id: '1', label: 'The Design of Everyday Things', description: 'by Don Norman' },
@@ -28,15 +29,11 @@ const Template: ComponentStory<typeof CheckboxGroupField> = ({ invalid, ...args 
   const [val, setVal] = React.useState<string>(value ?? '');
   const [touched, setTouched] = React.useState<boolean>(args.touched ?? false);
 
-  const containerStyle = { maxWidth: '900px' };
+  const containerStyle = { maxWidth: args.inlineLegend ? '640px' : '440px' };
   
-  const shouldClearInvalid = false; //React.useMemo(() => (
-    // clearErrorText(args.errorText || '', val)
-  // ), [args.errorText, val]);
-
   const isInvalid = React.useMemo(() => (
-    (args.required && !val) || (invalid && !shouldClearInvalid)
-  ), [args.required, val, invalid, shouldClearInvalid]);
+    args.required && !val
+  ), [args.required, val, invalid]);
 
 
   React.useEffect(() => {
@@ -60,3 +57,17 @@ const Template: ComponentStory<typeof CheckboxGroupField> = ({ invalid, ...args 
 export const CheckboxGroup = Template.bind({});
 
 CheckboxGroup.args = {};
+
+export const InvalidCheckboxGroup = Template.bind({});
+
+InvalidCheckboxGroup.args = {
+  invalid: true,
+  touched: true,
+  required: true,
+  errorText: 'This field is required',
+};
+
+export const WithCheckboxAlignedRight = Template.bind({});
+WithCheckboxAlignedRight.args = {
+  alignCheckboxRight: true,
+};

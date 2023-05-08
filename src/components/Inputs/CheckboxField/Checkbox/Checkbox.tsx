@@ -1,18 +1,21 @@
 import React from 'react';
 import { CheckboxInput } from './CheckboxCoreInput';
 import type { CheckboxInputCoreProps } from './CheckboxCoreInput';
+import { formatIdFromString } from '../../../../util';
 
 export interface CheckboxProps extends CheckboxInputCoreProps {
   label: string;
+  alignCheckboxRight?: boolean;
   description?: string;
 }
 
 export const Checkbox = ({
   label,
+  alignCheckboxRight = false,
   description = '',
   ...htmlInputProps
 }: CheckboxProps) => {
-  const id = htmlInputProps.id ?? label;
+  const id = React.useMemo(() => htmlInputProps.id ?? formatIdFromString(label), [htmlInputProps.id, label]);
 
   const ariaDescribedById = React.useMemo(() => (
     description ? `${id}-description` : undefined
@@ -22,14 +25,20 @@ export const Checkbox = ({
     ariaDescribedById ? { 'aria-describedby': ariaDescribedById } : {}
   ), [ariaDescribedById]);
 
+  const [containerClassNames, labelContainerClassNames] = React.useMemo(() => ([
+    alignCheckboxRight ? styles.container.rowReverse : styles.container.default,
+    alignCheckboxRight ? styles.labelContainer.rowReverse : styles.labelContainer.default,
+  ]), [alignCheckboxRight]);
+
+
   return (
-    <div className={styles.container}>
+    <div className={containerClassNames}>
       <CheckboxInput
         id={id}
         {...ariaAttributes}
         {...htmlInputProps}
       />
-      <div className={styles.labelContainer}>
+      <div className={labelContainerClassNames}>
         <label htmlFor={id} className={styles.label}>
           {label}
         </label>
@@ -42,8 +51,14 @@ export const Checkbox = ({
 }
 
 const styles = {
-  container: 'relative flex items-start',
-  labelContainer: 'ml-3 text-sm leading-6',
+  container: {
+    default: 'relative flex items-start py-2.5',
+    rowReverse: 'relative flex items-start py-2.5 justify-between flex-row-reverse',
+  },
+  labelContainer: {
+    default: 'ml-3 text-sm leading-6',
+    rowReverse: 'ml-2 text-sm leading-6',
+  },
   label: 'font-medium text-gray-900',
-  labelDescription: 'text-gray-500',
+  labelDescription: 'text-gray-600',
 };
