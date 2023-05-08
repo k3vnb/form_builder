@@ -1,8 +1,9 @@
 import React from 'react';
 import { Label } from '../../Label';
 import { InputHelperText, InputFieldLayout } from '../bin';
-import { getAriaDescribedById, getTextInputAriaAttributes } from './bin/util';
 import { TextInput, TextInputCoreProps } from './bin';
+import { getAriaDescribedById, getInputAriaAttributes } from '../bin/util';
+import { formatIdFromString } from '../../../util';
 
 export interface TextInputFieldProps extends TextInputCoreProps {
   value?: string;
@@ -35,7 +36,7 @@ export const TextInputField = (props: TextInputFieldProps): JSX.Element => {
     ...htmlInputProps
   } = props;
 
-  const id = htmlInputProps.id ?? label;
+  const id = React.useMemo(() => htmlInputProps.id ?? formatIdFromString(label), [htmlInputProps.id, label]);
   const showInvalid: boolean = React.useMemo(() => (touched && invalid), [touched, invalid]);
   const showHelperText: boolean = React.useMemo(() => (showInvalid || !!helperText), [showInvalid, helperText]);
 
@@ -44,7 +45,7 @@ export const TextInputField = (props: TextInputFieldProps): JSX.Element => {
   ), [id, showInvalid, showHelperText]);
 
   const ariaAttributes = React.useMemo(() => (
-    getTextInputAriaAttributes({ ariaDescribedById, isInvalid: showInvalid })
+    getInputAriaAttributes({ ariaDescribedById, isInvalid: showInvalid })
   ), [ariaDescribedById, showInvalid]);
 
   return (

@@ -67,7 +67,7 @@ export const Legend = ({
 
 const styles ={
   container: {
-    default: 'flex justify-between items-end gap-x-1',
+    default: 'flex justify-between items-end gap-x-4',
     inlineLabel: 'flex gap-x-1.5 whitespace-pre-wrap',
   },
   label: 'block text-sm font-bold leading-6 text-gray-700 text-wrap',

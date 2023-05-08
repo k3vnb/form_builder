@@ -1,5 +1,5 @@
-import { Nullable } from '../../../../var/types';
-import type { InputHelperTextProps } from '../../bin/InputHelperText';
+import { Nullable } from '../../../var/types';
+import type { InputHelperTextProps } from './InputHelperText';
 
 type AriaDescrByArgs = Pick<InputHelperTextProps, 'id' | 'show' | 'isInvalid'>;
 
@@ -15,7 +15,10 @@ interface AriaAttrsArgs {
 
 type AriaAttrsReturnType = Record<string, string>;
 
-export const getTextAreaAriaAttributes = ({ ariaDescribedById, isInvalid }: AriaAttrsArgs): Nullable<AriaAttrsReturnType> => {
+export const getInputAriaAttributes = ({
+  isInvalid,
+  ariaDescribedById,
+}: AriaAttrsArgs): Nullable<AriaAttrsReturnType> => {
   if (!ariaDescribedById) return {};
   return {
     'aria-describedby': ariaDescribedById,
