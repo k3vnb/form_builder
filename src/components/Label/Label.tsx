@@ -8,12 +8,14 @@ export interface LabelProps extends React.HTMLAttributes<HTMLLabelElement> {
   required?: boolean;
 }
 
+type LegendProps = Omit<LabelProps, 'htmlFor'>; 
+
 export const Label = ({
   text,
   htmlFor,
   inline = false,
   srOnly = false,
-  required = false
+  required = false,
 }: LabelProps) => {
 
   const requiredText = React.useMemo(() => {
@@ -21,7 +23,7 @@ export const Label = ({
     if (inline) return <span className={styles.requiredText.inline}>*</span>;
     return <span className={styles.requiredText.default}>Required</span>;
   }, [required, inline]);
-  
+
   if (srOnly) return <label htmlFor={htmlFor} className="sr-only">{text}</label>;
 
   const containerClassNames = inline ? styles.container.inlineLabel : styles.container.default;
@@ -31,6 +33,33 @@ export const Label = ({
       <label htmlFor={htmlFor} className={styles.label}>
         {text}
       </label>
+      {requiredText}
+    </div>
+  );
+};
+
+export const Legend = ({
+  text,
+  inline = false,
+  srOnly = false,
+  required = false,
+}: LegendProps) => {
+  
+  const requiredText = React.useMemo(() => {
+    if (!required) return null;
+    if (inline) return <span className={styles.requiredText.inline}>*</span>;
+    return <span className={styles.requiredText.default}>Required</span>;
+  }, [required, inline]);
+  
+  if (srOnly) return <legend className="sr-only">{text}</legend>;
+  
+  const containerClassNames = inline ? styles.container.inlineLabel : styles.container.default;
+
+  return (
+    <div className={containerClassNames}>
+      <legend className={styles.label}>
+        {text}
+      </legend>
       {requiredText}
     </div>
   );
