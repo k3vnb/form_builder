@@ -5,12 +5,16 @@ import { formatIdFromString } from '../../../../util';
 
 export interface CheckboxProps extends CheckboxInputCoreProps {
   label: string;
+  disabled?: boolean;
+  readOnly?: boolean;
   alignCheckboxRight?: boolean;
   description?: string;
 }
 
 export const Checkbox = ({
   label,
+  disabled = false,
+  readOnly = false,
   alignCheckboxRight = false,
   description = '',
   ...htmlInputProps
@@ -21,9 +25,13 @@ export const Checkbox = ({
     description ? `${id}-description` : undefined
   ), [id, description]);
 
-  const ariaAttributes = React.useMemo(() => (
-    ariaDescribedById ? { 'aria-describedby': ariaDescribedById } : {}
-  ), [ariaDescribedById]);
+  const ariaAttributes = React.useMemo(() => {
+    const attrs: Record<string, string | boolean> = {};
+    if (disabled) attrs['aria-disabled'] = true;
+    if (readOnly) attrs['aria-readonly'] = true;
+    if (ariaDescribedById) attrs['aria-describedby'] = ariaDescribedById;
+    return attrs;
+  }, [ariaDescribedById, disabled, readOnly]);
 
   const [containerClassNames, labelContainerClassNames] = React.useMemo(() => ([
     alignCheckboxRight ? styles.container.rowReverse : styles.container.default,
@@ -35,6 +43,8 @@ export const Checkbox = ({
     <div className={containerClassNames}>
       <CheckboxInput
         id={id}
+        disabled={disabled}
+        readOnly={readOnly}
         {...ariaAttributes}
         {...htmlInputProps}
       />
@@ -42,9 +52,11 @@ export const Checkbox = ({
         <label htmlFor={id} className={styles.label}>
           {label}
         </label>
-        <p id={ariaDescribedById} className={styles.labelDescription}>
-          {description}
-        </p>
+        {description && (
+          <p id={ariaDescribedById} className={styles.labelDescription}>
+            {description}
+          </p>
+        )}
       </div>
     </div>
   );
