@@ -21,34 +21,33 @@ export default {
       { id: '2', label: 'Don\'t Make Me Think', description: 'by Steve Krug' },
       { id: '3', label: '100 Things Every Designer Needs to Know About People', description: 'by Susan Weinschenk' },
     ],
+    values: ['1', '2'],
   },
 } as ComponentMeta<typeof CheckboxGroupField>;
 
-const Template: ComponentStory<typeof CheckboxGroupField> = ({ invalid, ...args }: CheckboxGroupFieldProps) => {
-  const value = '';
-  const [val, setVal] = React.useState<string>(value ?? '');
+const Template: ComponentStory<typeof CheckboxGroupField> = ({ invalid, values, ...args }: CheckboxGroupFieldProps) => {
+  const [vals, setVals] = React.useState<string[]>([...(values || [])]);
   const [touched, setTouched] = React.useState<boolean>(args.touched ?? false);
 
-  const containerStyle = { maxWidth: args.inlineLegend ? '640px' : '440px' };
+  const containerStyle = { maxWidth: args.inlineLegend ? '640px' : '480px' };
   
   const isInvalid = React.useMemo(() => (
-    args.required && !val
-  ), [args.required, val, invalid]);
+    (args.required && !vals.length && touched) || invalid
+  ), [args.required, vals, touched, invalid]);
 
-
-  React.useEffect(() => {
-    setVal(value ?? '');
-  }, [value]);
+  const updateVals = React.useCallback((newVals: string[]) => {
+    setVals(newVals);
+    setTouched(true);
+  }, [setVals, setTouched]);
 
   return (
     <div style={containerStyle}>
       <CheckboxGroupField
         {...args}
         invalid={isInvalid}
-        // value={val}
-        // onChange={setVal}
+        values={vals}
+        onChange={updateVals}
         touched={touched}
-        // onBlur={() => setTouched(true)}
       />
     </div>
   );
@@ -64,10 +63,12 @@ InvalidCheckboxGroup.args = {
   invalid: true,
   touched: true,
   required: true,
-  errorText: 'This field is required',
+  values: [],
+  errorText: 'This field is required.',
 };
 
 export const WithCheckboxAlignedRight = Template.bind({});
+
 WithCheckboxAlignedRight.args = {
   alignCheckboxRight: true,
 };

@@ -3,24 +3,28 @@ import { CheckboxInput } from './CheckboxCoreInput';
 import type { CheckboxInputCoreProps } from './CheckboxCoreInput';
 import { formatIdFromString } from '../../../../util';
 
-export interface CheckboxProps extends CheckboxInputCoreProps {
+export interface CheckboxFieldProps extends CheckboxInputCoreProps {
+  id: string;
   label: string;
   disabled?: boolean;
   readOnly?: boolean;
+  checked?: boolean;
+  onChange?: () => void;
   alignCheckboxRight?: boolean;
   description?: string;
 }
 
-export const Checkbox = ({
+export const CheckboxField = ({
+  id,
   label,
   disabled = false,
   readOnly = false,
   alignCheckboxRight = false,
   description = '',
+  onChange = () => {},
   ...htmlInputProps
-}: CheckboxProps) => {
-  const id = React.useMemo(() => htmlInputProps.id ?? formatIdFromString(label), [htmlInputProps.id, label]);
-
+}: CheckboxFieldProps) => {
+  
   const ariaDescribedById = React.useMemo(() => (
     description ? `${id}-description` : undefined
   ), [id, description]);
@@ -47,6 +51,7 @@ export const Checkbox = ({
         readOnly={readOnly}
         {...ariaAttributes}
         {...htmlInputProps}
+        onChange={onChange}
       />
       <div className={labelContainerClassNames}>
         <label htmlFor={id} className={styles.label}>

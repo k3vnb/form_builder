@@ -1,5 +1,5 @@
-export { Checkbox, CheckboxGroupField } from './CheckboxField';
-export type { CheckboxProps, CheckboxGroupFieldProps } from './CheckboxField';
+export { CheckboxField, CheckboxGroupField } from './CheckboxFields';
+export type { CheckboxFieldProps, CheckboxGroupFieldProps } from './CheckboxFields';
 
 export { TextAreaField } from './TextAreaField';
 export type { TextAreaFieldProps } from './TextAreaField';

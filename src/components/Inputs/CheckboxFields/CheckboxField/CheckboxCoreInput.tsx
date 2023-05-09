@@ -1,9 +1,15 @@
 import React from 'react';
 
-export interface CheckboxInputCoreProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface CheckboxInputCoreProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+  onChange?: () => void;
+}
   
 export const CheckboxInput = (props: CheckboxInputCoreProps) => {
-  const { disabled = false, readOnly = false } = props;
+  const {
+    disabled = false,
+    readOnly = false,
+    onChange = () => {},
+  } = props;
 
   const inputClassNames = React.useMemo(() => (
     [
@@ -20,6 +26,7 @@ export const CheckboxInput = (props: CheckboxInputCoreProps) => {
         disabled={disabled || readOnly}
         readOnly={readOnly}
         className={inputClassNames}
+        onChange={onChange}
       />
     </div>
   );
