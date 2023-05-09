@@ -21,7 +21,7 @@ export default {
       { id: '2', label: 'Don\'t Make Me Think', description: 'by Steve Krug' },
       { id: '3', label: '100 Things Every Designer Needs to Know About People', description: 'by Susan Weinschenk' },
     ],
-    values: ['1', '2'],
+    values: [],
   },
 } as ComponentMeta<typeof CheckboxGroupField>;
 
