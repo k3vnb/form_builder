@@ -6,7 +6,6 @@ export default {
   title: 'Form/CheckboxGroupField',
   component: CheckboxGroupField,
   args: {
-    type: 'text',
     legend: 'Books You\'d Recommend',
     touched: false,
     invalid: false,

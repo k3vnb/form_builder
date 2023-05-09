@@ -57,8 +57,8 @@ export const CheckboxGroupField = ({
     showInvalid ? styles.container.invalid : styles.container.default
   ), [showInvalid]);
 
-  const checkboxListClassNames = React.useMemo(() => (
-    showDividers ? styles.checkboxList.divider : styles.checkboxList.default
+  const optionsListClassNames = React.useMemo(() => (
+    showDividers ? styles.optionsList.divider : styles.optionsList.default
   ), [showDividers]);
 
   const updateValues = React.useCallback((val: string) => {
@@ -85,7 +85,7 @@ export const CheckboxGroupField = ({
           </div>
         </InputFieldLayout.LabelContainer>
         <InputFieldLayout.InputContainer inlineLabel={inlineLegend}>
-          <div className={checkboxListClassNames}>
+          <div className={optionsListClassNames}>
             {options.map((option) => (
               <CheckboxField
                 {...option}
@@ -115,7 +115,7 @@ const styles = {
     default: 'pr-4 border-r-4 rounded-sm border-transparent',
     invalid: 'pr-4 border-r-4 rounded-sm border-red-300',
   },
-  checkboxList: {
+  optionsList: {
     default: 'divide-y divide-transparent',
     divider: 'divide-y divide-gray-200',
   },
