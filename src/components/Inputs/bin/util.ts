@@ -15,7 +15,10 @@ interface AriaAttrsArgs {
 
 type AriaAttrsReturnType = Record<string, string>;
 
-export const getTextInputAriaAttributes = ({ ariaDescribedById, isInvalid }: AriaAttrsArgs): Nullable<AriaAttrsReturnType> => {
+export const getInputAriaAttributes = ({
+  isInvalid,
+  ariaDescribedById,
+}: AriaAttrsArgs): Nullable<AriaAttrsReturnType> => {
   if (!ariaDescribedById) return {};
   return {
     'aria-describedby': ariaDescribedById,

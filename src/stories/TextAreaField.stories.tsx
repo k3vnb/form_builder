@@ -1,29 +1,32 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { TextInput, TextInputProps } from '../components/Inputs';
+import { TextAreaField, TextAreaFieldProps } from '../components/Inputs';
 
 export default {
-  title: 'Form/TextInput',
-  component: TextInput,
+  title: 'Form/TextAreaField',
+  component: TextAreaField,
   args: {
-    type: 'text',
-    label: 'Label',
+    label: 'Describe your favorite book:',
     value: '',
     invalid: false,
     required: false,
     readOnly: false,
     disabled: false,
-    placeholder: 'Enter your text...',
+    hideLabel: false,
+    inlineLabel: false,
+    placeholder: '',
   },
-} as ComponentMeta<typeof TextInput>;
+} as ComponentMeta<typeof TextAreaField>;
 
-const validText = 'taco cat';
+const validText = 'tacocat';
 const errorText = `Value must be "${validText}".`;
 const clearErrorText = (errText: string, val:string): boolean => (errText === errorText && val === validText);
 
-const Template: ComponentStory<typeof TextInput> = ({ value, invalid, ...args }: TextInputProps) => {
+const Template: ComponentStory<typeof TextAreaField> = ({ value, invalid, ...args }: TextAreaFieldProps) => {
   const [val, setVal] = React.useState<string>(value ?? '');
   const [touched, setTouched] = React.useState<boolean>(args.touched ?? false);
+
+  const containerWidth = 'w-96';
   
   const shouldClearInvalid = React.useMemo(() => (
     clearErrorText(args.errorText || '', val)
@@ -39,9 +42,10 @@ const Template: ComponentStory<typeof TextInput> = ({ value, invalid, ...args }:
   }, [value]);
 
   return (
-    <div className='w-64'>
-      <TextInput
+    <div className={containerWidth}>
+      <TextAreaField
         {...args}
+        rows={4}
         invalid={isInvalid}
         value={val}
         onChange={setVal}
@@ -52,21 +56,22 @@ const Template: ComponentStory<typeof TextInput> = ({ value, invalid, ...args }:
   );
 };
 
-export const DefaultTextInput = Template.bind({});
+export const DefaultTextAreaField = Template.bind({});
+export const DisabledTextAreaField = Template.bind({});
+export const InvalidTextAreaField = Template.bind({});
+export const ReadOnlyTextAreaField = Template.bind({});
 
-export const InvalidTextInput = Template.bind({});
-
-InvalidTextInput.args = {
-  errorText,
-  invalid: true,
-  touched: true,
-  value: 'Not taco cat',
-};
-
-export const RequiredTextInput = Template.bind({});
-
-RequiredTextInput.args = {
+InvalidTextAreaField.args = {
   required: true,
+  touched: true,
   errorText: 'This field cannot be blank.',
 };
 
+DisabledTextAreaField.args = {
+  disabled: true,
+};
+
+ReadOnlyTextAreaField.args = {
+  readOnly: true,
+  value: 'A strange book about a cat and a hat and managing chaotic elements one cannot predict.',
+};
