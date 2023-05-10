@@ -1,11 +1,11 @@
 import React from 'react';
-import { Legend } from '../../../Label';
-import { InputHelperText, InputFieldLayout } from '../../bin';
-import { CheckboxField, CheckboxFieldProps } from '../CheckboxField';
-import { formatIdFromString } from '../../../../util';
-import { getAriaDescribedById, getInputAriaAttributes } from '../../bin/util';
+import { Legend } from '../../Label';
+import { InputHelperText, InputFieldLayout } from '../bin';
+import { RadioField, RadioFieldProps } from './bin';
+import { formatIdFromString } from '../../../util';
+import { getAriaDescribedById, getInputAriaAttributes } from '../bin/util';
 
-export interface CheckboxGroupFieldProps extends Omit<React.HTMLAttributes<HTMLFieldSetElement> , 'onChange'> {
+export interface RadioGroupFieldProps extends Omit<React.HTMLAttributes<HTMLFieldSetElement> , 'onChange'> {
   legend: string;
   touched?: boolean;
   invalid?: boolean;
@@ -17,13 +17,13 @@ export interface CheckboxGroupFieldProps extends Omit<React.HTMLAttributes<HTMLF
   errorText?: string;
   helperText?: string;
   showDividers?: boolean;
-  options?: CheckboxFieldProps[];
-  values?: string[];
-  onChange?: (values: string[]) => void;
-  alignCheckboxRight?: boolean;
+  options?: RadioFieldProps[];
+  value: string;
+  onChange?: (value: string) => void;
+  alignRadioButtonRight?: boolean;
 }
 
-export const CheckboxGroupField = ({
+export const RadioGroupField = ({
   legend,
   touched = false,
   invalid = false,
@@ -32,18 +32,19 @@ export const CheckboxGroupField = ({
   readOnly = false,
   errorText = '',
   helperText = '',
-  values = [],
+  value = '',
   options = [],
   hideLegend = false,
   inlineLegend = false,
   showDividers = false,
-  alignCheckboxRight = false,
+  alignRadioButtonRight = false,
   onChange = () => {},
   ...htmlFieldSetProps
-}: CheckboxGroupFieldProps) => {
+}: RadioGroupFieldProps) => {
   const id = React.useMemo(() => htmlFieldSetProps.id ?? formatIdFromString(legend), [htmlFieldSetProps.id, legend]);
   const showInvalid: boolean = React.useMemo(() => (touched && invalid), [touched, invalid]);
   const showHelperText: boolean = React.useMemo(() => (showInvalid || !!helperText), [showInvalid, helperText]);
+  const val = React.useMemo(() => (value || options[0]?.id || ''), [value, options]);
 
   const ariaDescribedById = React.useMemo(() => (
     getAriaDescribedById({ id, isInvalid: showInvalid, show: showHelperText })
@@ -61,11 +62,6 @@ export const CheckboxGroupField = ({
     showDividers ? styles.optionsList.divider : styles.optionsList.default
   ), [showDividers]);
 
-  const updateValues = React.useCallback((val: string) => {
-    if (values.includes(val)) return onChange(values.filter((v) => v !== val));
-    onChange([...values, val]);
-  }, [values, onChange]);
-
   return (
     <fieldset
       disabled={disabled}
@@ -75,26 +71,24 @@ export const CheckboxGroupField = ({
     >
       <InputFieldLayout.MainContainer inlineLabel={inlineLegend}>
         <InputFieldLayout.LabelContainer inlineLabel={inlineLegend} hideLabel={hideLegend}>
-          <div>
-            <Legend
-              required={required}
-              inline={inlineLegend}
-              text={legend}
-              srOnly={hideLegend}
-            />
-          </div>
+          <Legend
+            required={required}
+            inline={inlineLegend}
+            text={legend}
+            srOnly={hideLegend}
+          />
         </InputFieldLayout.LabelContainer>
         <InputFieldLayout.InputContainer inlineLabel={inlineLegend}>
           <div className={optionsListClassNames}>
             {options.map((option) => (
-              <CheckboxField
+              <RadioField
                 {...option}
                 key={option.id ?? option.label}
                 disabled={disabled || option.disabled}
                 readOnly={readOnly || option.readOnly}
-                checked={values.includes(option.id)}
-                onChange={() => updateValues(option.id)}
-                alignCheckboxRight={option.alignCheckboxRight || alignCheckboxRight}
+                checked={val === option.id}
+                onChange={() => onChange(option.id)}
+                alignRadioButtonRight={option.alignRadioButtonRight || alignRadioButtonRight}
               />
             ))}
           </div>

@@ -1,7 +1,6 @@
 import React from 'react';
-import { CheckboxInput } from './CheckboxCoreInput';
-import type { CheckboxInputCoreProps } from './CheckboxCoreInput';
-import { formatIdFromString } from '../../../../util';
+import { CheckboxInput } from './CheckboxInputCore';
+import type { CheckboxInputCoreProps } from './CheckboxInputCore';
 
 export interface CheckboxFieldProps extends CheckboxInputCoreProps {
   id: string;
