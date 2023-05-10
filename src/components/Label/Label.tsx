@@ -1,5 +1,5 @@
 import React from 'react';
-import { LabelContainer } from './bin';
+import { LabelContainer, labelClassNames } from './bin';
 
 export interface LabelProps extends React.HTMLAttributes<HTMLLabelElement> {
   text: string;
@@ -8,8 +8,6 @@ export interface LabelProps extends React.HTMLAttributes<HTMLLabelElement> {
   srOnly?: boolean;
   required?: boolean;
 }
-
-type LegendProps = Omit<LabelProps, 'htmlFor'>;
 
 export const Label = ({
   text,
@@ -23,31 +21,9 @@ export const Label = ({
 
   return (
     <LabelContainer inline={inline} required={required}>
-      <label htmlFor={htmlFor} className={styles.label}>
+      <label htmlFor={htmlFor} className={labelClassNames}>
         {text}
       </label>
     </LabelContainer>
   );
 };
-
-export const Legend = ({
-  text,
-  inline = false,
-  srOnly = false,
-  required = false,
-}: LegendProps) => {
-  
-  if (srOnly) return <legend className="sr-only">{text}</legend>;
-  
-  return (
-    <LabelContainer inline={inline} required={required}>
-      <legend className={styles.label}>
-        {text}
-      </legend>
-    </LabelContainer>
-  );
-};
-
-const styles ={
-  label: 'block text-sm font-bold leading-6 text-gray-700 text-wrap',
-}
