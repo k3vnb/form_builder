@@ -5,6 +5,7 @@ import { OptionType } from './bin';
 import { ListBoxLabel } from '../../Label';
 import { InputHelperText, InputFieldLayout } from '../bin';
 import { ListBoxSelect } from './bin/ListBoxSelect';
+import { formatIdFromString } from '../../../util';
 
 export interface SelectMenuFieldProps {
   label: string;
@@ -26,18 +27,32 @@ export interface SelectMenuFieldProps {
 export const SelectMenuField = ({
   label,
   value,
-  hideLabel = false,
+  touched = false,
+  invalid = false,
+  disabled = false,
   required = false,
+  readOnly = false,
+  hideLabel = false,
   inlineLabel = false,
   options = [],
+  errorText = '',
+  helperText = '',
   onChange,
 }: SelectMenuFieldProps) => {
-  const selected = options.find((option) => option.id === value) || null;
-  const setSelected = (option: OptionType) => onChange(option.id);
+  const selectedOption = options.find((option) => option.id === value) || null;
+  const setSelectedOption = (option: OptionType) => onChange(option.id);
+
+  const showInvalid: boolean = React.useMemo(() => (touched && invalid), [touched, invalid]);
+  const showHelperText: boolean = React.useMemo(() => (showInvalid || !!helperText), [showInvalid, helperText]);
+  const helperTextId: string = React.useMemo(() => (showHelperText ? `${formatIdFromString(label)}_help_text` : ''), [label, showHelperText]);
 
   return (
-    <Listbox value={selected} onChange={setSelected}>
-      {({ open }) => (
+    <Listbox
+      value={selectedOption}
+      disabled={disabled || readOnly}
+      onChange={setSelectedOption}
+    >
+      {(renderProps) => (
         <InputFieldLayout.MainContainer inlineLabel={inlineLabel}>
           <InputFieldLayout.LabelContainer inlineLabel={inlineLabel} hideLabel={hideLabel}>
             <ListBoxLabel
@@ -49,9 +64,17 @@ export const SelectMenuField = ({
           </InputFieldLayout.LabelContainer>
           <InputFieldLayout.InputContainer inlineLabel={inlineLabel} hideLabel={hideLabel}>
             <ListBoxSelect
-              open={open}
-              selected={selected}
+              {...renderProps}
               options={options}
+              readOnly={readOnly}
+              disabled={disabled}
+              invalid={showInvalid}
+            />
+            <InputHelperText
+              id={helperTextId}
+              show={showHelperText}
+              isInvalid={showInvalid}
+              text={errorText || helperText}
             />
           </InputFieldLayout.InputContainer>
         </InputFieldLayout.MainContainer>

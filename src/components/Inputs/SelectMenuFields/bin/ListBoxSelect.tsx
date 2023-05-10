@@ -6,41 +6,101 @@ import { Nullable } from '../../../../var/types';
 
 export interface ListBoxSelectProps {
   open: boolean;
-  selected: Nullable<OptionType>;
   placeholder?: string;
   options: OptionType[];
   invalid?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
-  required?: boolean;
+  value: Nullable<OptionType>;
 }
 
 export const ListBoxSelect = ({
   open,
-  selected,
+  value,
+  invalid = false,
+  disabled = false,
+  readOnly = false,
   placeholder = 'Select an option',
   options = [],
 }: ListBoxSelectProps) => {
-  const displayText = selected?.display || placeholder;
-  const displayClassNames = selected ? styles.display : styles.placeholder;
+  const displayText: string = value?.display || placeholder;
+
+  const [
+    buttonClassNames,
+    displayClassNames,
+    iconClassNames,
+  ] = React.useMemo((): string[] => ([
+    getButtonContainerClassNames(invalid, disabled, readOnly),
+    getDisplayClassNames(invalid, readOnly, !value),
+    getIconClassNames(invalid, disabled),
+  ]), [invalid, readOnly, disabled, value]);
 
   return (
     <div className="relative">
-      <Listbox.Button className={styles.buttonContainer}>
+      <Listbox.Button className={buttonClassNames}>
         <span className={displayClassNames}>{displayText}</span>
-        <span className={styles.iconContainer}>
-          <ChevronUpDownIcon className={styles.icon} aria-hidden="true" />
-        </span>
+        {!readOnly && (
+          <span className={styles.iconContainer}>
+            <ChevronUpDownIcon className={iconClassNames} aria-hidden="true" />
+          </span>
+        )}
       </Listbox.Button>
       <Options open={open} options={options} />
     </div>
-  )
+  );
 }
 
+const getButtonContainerClassNames = (invalid: boolean, disabled: boolean, readOnly: boolean): string => {
+  return [
+    styles.buttonContainer.baseStyles,
+    invalid && styles.buttonContainer.invalid,
+    (readOnly && styles.buttonContainer.readOnly) || (disabled && styles.buttonContainer.disabled),
+  ].filter(Boolean).join(' ');
+};
+
+const getDisplayClassNames = (invalid: boolean, readOnly: boolean, isPlaceholder: boolean): string => {
+  if (isPlaceholder) {
+    return [
+      styles.placeholder.baseStyles,
+      (invalid && styles.placeholder.invalid) || styles.placeholder.default
+    ].join(' ');
+  }
+
+  return [
+    styles.display.baseStyles,
+    readOnly && styles.display.readOnly
+  ].filter(Boolean).join(' ');
+};
+
+const getIconClassNames = (invalid: boolean, disabled: boolean): string => {
+  return [
+    styles.icon.baseStyles,
+    (invalid && styles.icon.invalid) || (disabled && styles.icon.disabled) || styles.icon.default
+  ].join(' ');
+};
+
 const styles = {
-  buttonContainer: 'relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6',
-  display: 'block truncate',
-  placeholder: 'block truncate text-gray-500',
+  buttonContainer: {
+    baseStyles: 'relative w-full rounded-md py-1.5 pl-3 pr-10 text-left shadow-sm ring-1 ring-inset focus:outline-none focus:ring-2 sm:text-sm sm:leading-6',
+    default: 'cursor-default bg-white text-gray-900 ring-gray-300 focus:ring-indigo-600',
+    invalid: 'cursor-default text-red-900 ring-red-300 focus:ring-red-500',
+    disabled: 'cursor-not-allowed bg-gray-50 ring-gray-300 text-gray-400',
+    readOnly: 'cursor-not-allowed bg-indigo-50 ring-gray-300 text-gray-600',
+  },
+  display: {
+    baseStyles: 'block truncate',
+    readOnly: 'tracking-wide'
+  },
+  placeholder: {
+    baseStyles: 'block truncate',
+    default: 'text-gray-400',
+    invalid: 'text-red-300',
+  },
   iconContainer: 'pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2',
-  icon: 'h-5 w-5 text-gray-400',
+  icon: {
+    baseStyles: 'h-5 w-5',
+    default: 'text-gray-400',
+    disabled: 'text-gray-300',
+    invalid: 'text-red-300',
+  },
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { Option, OptionType } from './Option';
 
@@ -15,12 +15,12 @@ export const Options = ({
   return (
     <Transition
       show={open}
-      as={React.Fragment}
-      leave="transition ease-in duration-100"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
+      as={Fragment}
+      leave="transition duration-75 ease-out"
+      leaveFrom="transform scale-100 opacity-100"
+      leaveTo="transform scale-95 opacity-0"
     >
-      <Listbox.Options className={styles.optionsContainer}>
+      <Listbox.Options static className={styles.optionsContainer}>
         {options.map((option) => (
           <Option
             key={option.id}

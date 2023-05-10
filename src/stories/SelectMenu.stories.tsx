@@ -21,7 +21,7 @@ export default {
   args: {
     label: 'Assign to',
     touched: false,
-    required: true,
+    required: false,
     readOnly: false,
     disabled: false,
     hideLabel: false,
@@ -31,9 +31,10 @@ export default {
   },
 } as ComponentMeta<typeof SelectMenuField>;
 
-const Template: ComponentStory<typeof SelectMenuField> = ({ value, ...args }: SelectMenuFieldProps) => {
+const Template: ComponentStory<typeof SelectMenuField> = ({ value, invalid, ...args }: SelectMenuFieldProps) => {
   const [val, setVal] = React.useState<string>(value || '');
-  const [touched, setTouched] = React.useState<boolean>(args.touched ?? false);
+  const [touched, setTouched] = React.useState<boolean>(args.touched || false);
+  const [showInvalid, setShowInvalid] = React.useState<boolean>(invalid || false);
 
   const containerStyle = { maxWidth: args.inlineLabel ? '480px' : '400px' };
 
@@ -41,16 +42,25 @@ const Template: ComponentStory<typeof SelectMenuField> = ({ value, ...args }: Se
     setVal(value || '');
   }, [value]);
 
+  React.useEffect(() => {
+    if (invalid) {
+      setShowInvalid(true);
+      setTouched(true);
+    }
+  }, [invalid]);
+
   const updateVal = React.useCallback((newVal: string) => {
     setVal(newVal);
     setTouched(true);
-  }, [setVal, setTouched]);
+    if (showInvalid) setShowInvalid(false);
+  }, [setVal, setTouched, showInvalid]);
 
   return (
     <div style={containerStyle}>
       <SelectMenuField
         {...args}
         value={val}
+        invalid={showInvalid}
         onChange={updateVal}
         touched={touched}
       />
@@ -58,6 +68,22 @@ const Template: ComponentStory<typeof SelectMenuField> = ({ value, ...args }: Se
   );
 };
 
-export const SelectMenu = Template.bind({});
+export const DefaultSelectMenu = Template.bind({});
 
-SelectMenu.args = {};
+DefaultSelectMenu.args = {};
+
+export const WithDisabledOptions = Template.bind({});
+
+WithDisabledOptions.args = {
+  options: options.map((o, i) => ({ ...o, disabled: (i+1) % 4 === 0 })),
+};
+
+export const InvalidSelectMenu = Template.bind({});
+
+InvalidSelectMenu.args = {
+  invalid: true,
+  touched: true,
+  required: true,
+  value: '',
+  errorText: 'This field is required.',
+};
