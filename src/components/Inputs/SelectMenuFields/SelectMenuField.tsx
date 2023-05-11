@@ -1,17 +1,16 @@
 import React from 'react';
 import { Listbox } from '@headlessui/react';
 
-import { OptionType } from './bin';
 import { ListBoxLabel } from '../../Label';
+import { OptionType, ListBoxSelect } from './bin';
 import { InputHelperText, InputFieldLayout } from '../bin';
-import { ListBoxSelect } from './bin/ListBoxSelect';
+
 import { formatIdFromString } from '../../../util';
 
 export interface SelectMenuFieldProps {
   label: string;
   value?: string;
   options: OptionType[];
-  onChange: (value: string) => void;
   touched?: boolean;
   invalid?: boolean;
   disabled?: boolean;
@@ -21,11 +20,13 @@ export interface SelectMenuFieldProps {
   hideLabel?: boolean;
   errorText?: string;
   helperText?: string;
+  onChange: (value: string) => void;
 }
 
 export const SelectMenuField = ({
   label,
-  value,
+  value = '',
+  options = [],
   touched = false,
   invalid = false,
   disabled = false,
@@ -33,7 +34,6 @@ export const SelectMenuField = ({
   readOnly = false,
   hideLabel = false,
   inlineLabel = false,
-  options = [],
   errorText = '',
   helperText = '',
   onChange,
