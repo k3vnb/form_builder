@@ -78,6 +78,14 @@ WithDisabledOptions.args = {
   options: options.map((o, i) => ({ ...o, disabled: (i+1) % 4 === 0 })),
 };
 
+export const WithOptionDescriptions = Template.bind({});
+
+const formatUserName = (name: string) => '@' + name.split(' ').map((n,i) => (n.charAt(0).toLowerCase() + (i === 0 ? '' : n.slice(1)))).join('');
+
+WithOptionDescriptions.args = {
+  options: options.map((o) => ({ ...o, description: formatUserName(o.display) })),
+};
+
 export const InvalidSelectMenu = Template.bind({});
 
 InvalidSelectMenu.args = {

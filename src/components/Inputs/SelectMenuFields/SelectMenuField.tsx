@@ -12,7 +12,6 @@ export interface SelectMenuFieldProps {
   value?: string;
   options: OptionType[];
   onChange: (value: string) => void;
-
   touched?: boolean;
   invalid?: boolean;
   disabled?: boolean;

@@ -27,6 +27,14 @@ export const Option = ({ value }: OptionProps) => {
     `${styles.display.baseStyles} ${selected ? styles.display.selected : styles.display.default}`
   );
 
+  const getDescriptionClassNames = (active: boolean, selected: boolean) => (
+    [
+      styles.description.baseStyles,
+      active ? styles.description.active : styles.description.default,
+      selected && styles.description.selected,
+    ].filter(Boolean).join(' ')
+  );
+
   return (
     <Listbox.Option
       disabled={value.disabled}
@@ -38,6 +46,11 @@ export const Option = ({ value }: OptionProps) => {
           <span className={getDisplayClassNames(selected)}>
             {value.display}
           </span>
+          {value.description && (
+            <span className={getDescriptionClassNames(active, selected)}>
+              {value.description}
+            </span>
+          )}
           <OptionCheckIcon selected={selected} active={active} />
         </>
       )}
@@ -56,5 +69,11 @@ const styles = {
     baseStyles: 'block truncate',
     selected: 'font-semibold',
     default: 'font-normal',
+  },
+  description: {
+    baseStyles: 'block text-sm tracking-wide mt-px',
+    default: 'text-gray-600',
+    selected: 'font-semibold',
+    active: 'text-gray-100',
   },
 };
