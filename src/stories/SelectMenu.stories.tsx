@@ -16,7 +16,7 @@ const options = [
 ];
 
 export default {
-  title: 'Form/SelectMenuField',
+  title: 'Form/Menus/SelectMenu Field',
   component: SelectMenuField,
   args: {
     label: 'Assign to',

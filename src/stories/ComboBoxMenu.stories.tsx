@@ -16,7 +16,7 @@ const options = [
 ];
 
 export default {
-  title: 'Form/ComboBoxField',
+  title: 'Form/Menus/ComboBox Field',
   component: ComboBoxField,
   args: {
     label: 'Assign to',

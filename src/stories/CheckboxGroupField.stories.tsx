@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { CheckboxGroupField, CheckboxGroupFieldProps } from '../components/Inputs';
 
 export default {
-  title: 'Form/CheckboxGroupField',
+  title: 'Form/CheckboxGroup Field',
   component: CheckboxGroupField,
   args: {
     legend: 'Books You\'d Recommend',

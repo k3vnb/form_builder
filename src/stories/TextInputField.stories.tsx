@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { TextInputField, TextInputFieldProps } from '../components/Inputs';
 
 export default {
-  title: 'Form/TextInputField',
+  title: 'Form/TextInput Field',
   component: TextInputField,
   args: {
     type: 'text',

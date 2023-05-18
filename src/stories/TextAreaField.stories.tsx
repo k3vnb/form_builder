@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { TextAreaField, TextAreaFieldProps } from '../components/Inputs';
 
 export default {
-  title: 'Form/TextAreaField',
+  title: 'Form/TextArea Field',
   component: TextAreaField,
   args: {
     label: 'Describe your favorite book:',

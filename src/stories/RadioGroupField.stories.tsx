@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { RadioGroupField, RadioGroupFieldProps } from '../components/Inputs';
 
 export default {
-  title: 'Form/RadioGroupField',
+  title: 'Form/RadioGroup Field',
   component: RadioGroupField,
   args: {
     legend: 'How would you rate the last book you read?',
