@@ -56,23 +56,20 @@ const Template: ComponentStory<typeof SelectMenuField> = ({ value, invalid, ...a
   );
 };
 
-export const DefaultSelectMenu = Template.bind({});
-
-DefaultSelectMenu.args = {};
-
+export const Default = Template.bind({});
+export const DisabledSelectMenu = Template.bind({});
+export const InvalidSelectMenu = Template.bind({});
+export const ReadOnlySelectMenu = Template.bind({});
+export const RequiredSelectMenu = Template.bind({});
 export const WithDisabledOptions = Template.bind({});
-
-WithDisabledOptions.args = {
-  options: userLists.withSomeDisabled,
-};
-
 export const WithOptionDescriptions = Template.bind({});
 
-WithOptionDescriptions.args = {
-  options: userLists.withDescriptions,
-};
+Default.args = {};
 
-export const InvalidSelectMenu = Template.bind({});
+DisabledSelectMenu.args = {
+  disabled: true,
+  value: userLists.default[1].id,
+};
 
 InvalidSelectMenu.args = {
   invalid: true,
@@ -80,4 +77,21 @@ InvalidSelectMenu.args = {
   required: true,
   value: '',
   errorText: 'This field is required.',
+};
+
+ReadOnlySelectMenu.args = {
+  value: userLists.default[1].id,
+  readOnly: true,
+};
+
+RequiredSelectMenu.args = {
+  required: true,
+};
+
+WithDisabledOptions.args = {
+  options: userLists.withSomeDisabled,
+};
+
+WithOptionDescriptions.args = {
+  options: userLists.withDescriptions,
 };

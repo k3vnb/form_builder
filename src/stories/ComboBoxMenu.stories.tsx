@@ -57,23 +57,20 @@ const Template: ComponentStory<typeof ComboBoxField> = ({ value, invalid, ...arg
   );
 };
 
-export const DefaultComboBox = Template.bind({});
-
-DefaultComboBox.args = {};
-
+export const Default = Template.bind({});
+export const DisabledComboBox = Template.bind({});
+export const InvalidComboBox = Template.bind({});
+export const ReadOnlyComboBox = Template.bind({});
+export const RequiredComboBox = Template.bind({});
 export const WithDisabledOptions = Template.bind({});
-
-WithDisabledOptions.args = {
-  options: userLists.withSomeDisabled,
-};
-
 export const WithOptionDescriptions = Template.bind({});
 
-WithOptionDescriptions.args = {
-  options: userLists.withDescriptions,
-};
+Default.args = {};
 
-export const InvalidComboBox = Template.bind({});
+DisabledComboBox.args = {
+  disabled: true,
+  value: userLists.default[1].id,
+};
 
 InvalidComboBox.args = {
   invalid: true,
@@ -81,4 +78,21 @@ InvalidComboBox.args = {
   required: true,
   value: '',
   errorText: 'This field is required.',
+};
+
+ReadOnlyComboBox.args = {
+  value: userLists.default[1].id,
+  readOnly: true,
+};
+
+RequiredComboBox.args = {
+  required: true,
+};
+
+WithDisabledOptions.args = {
+  options: userLists.withSomeDisabled,
+};
+
+WithOptionDescriptions.args = {
+  options: userLists.withDescriptions,
 };

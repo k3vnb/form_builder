@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { CheckboxGroupField, CheckboxGroupFieldProps } from '../components/Inputs';
 
 export default {
-  title: 'Form/CheckboxGroup Field',
+  title: 'Form/Toggles/CheckboxGroup Field',
   component: CheckboxGroupField,
   args: {
     legend: 'Books You\'d Recommend',
@@ -52,11 +52,18 @@ const Template: ComponentStory<typeof CheckboxGroupField> = ({ invalid, values, 
   );
 };
 
-export const CheckboxGroup = Template.bind({});
-
-CheckboxGroup.args = {};
-
+export const Default = Template.bind({});
+export const DisabledCheckboxGroup = Template.bind({});
 export const InvalidCheckboxGroup = Template.bind({});
+export const ReadOnlyCheckboxGroup = Template.bind({});
+export const RequiredCheckboxGroup = Template.bind({});
+export const WithCheckboxAlignedRight = Template.bind({});
+
+Default.args = {};
+
+DisabledCheckboxGroup.args = {
+  disabled: true,
+};
 
 InvalidCheckboxGroup.args = {
   invalid: true,
@@ -66,7 +73,14 @@ InvalidCheckboxGroup.args = {
   errorText: 'This field is required.',
 };
 
-export const WithCheckboxAlignedRight = Template.bind({});
+ReadOnlyCheckboxGroup.args = {
+  readOnly: true,
+  values: ['1'],
+};
+
+RequiredCheckboxGroup.args = {
+  required: true,
+};
 
 WithCheckboxAlignedRight.args = {
   alignCheckboxRight: true,

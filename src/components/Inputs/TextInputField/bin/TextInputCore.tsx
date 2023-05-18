@@ -60,6 +60,6 @@ const styles = {
   default: 'text-gray-900 shadow-sm ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600',
   invalid: 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500',
   readOnly: 'bg-indigo-50 text-gray-600 placeholder:text-gray-500 placeholder:font-normal ring-gray-300 cursor-not-allowed tracking-wide',
-  disabled: 'bg-gray-50 text-gray-500 placeholder:text-gray-400 ring-gray-300 cursor-not-allowed opacity-50'
+  disabled: 'bg-gray-50 text-gray-500 placeholder:text-gray-400 ring-gray-200 cursor-not-allowed',
 }
 

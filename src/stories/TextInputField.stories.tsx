@@ -7,7 +7,7 @@ export default {
   component: TextInputField,
   args: {
     type: 'text',
-    label: 'Favorite Book',
+    label: 'Favorite Palindrome',
     value: '',
     invalid: false,
     required: false,
@@ -15,7 +15,7 @@ export default {
     disabled: false,
     hideLabel: false,
     inlineLabel: false,
-    placeholder: 'e.g., the Cat in the Hat',
+    placeholder: 'e.g., toot',
   },
 } as ComponentMeta<typeof TextInputField>;
 
@@ -36,7 +36,6 @@ const Template: ComponentStory<typeof TextInputField> = ({ value, invalid, ...ar
   const isInvalid = React.useMemo(() => (
     (args.required && !val) || (invalid && !shouldClearInvalid)
   ), [args.required, val, invalid, shouldClearInvalid]);
-
 
   React.useEffect(() => {
     setVal(value ?? '');
@@ -64,7 +63,6 @@ export const RequiredTextInputField = Template.bind({});
 
 InvalidTextInputField.args = {
   errorText,
-  label: 'Favorite Palindrome',
   invalid: true,
   touched: true,
   placeholder: 'e.g., toot',
@@ -77,7 +75,7 @@ DisabledTextInputField.args = {
 
 ReadOnlyTextInputField.args = {
   readOnly: true,
-  value: 'Leaves of Grass',
+  value: 'tacocat',
 };
 
 RequiredTextInputField.args = {

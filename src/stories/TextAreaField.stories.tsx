@@ -18,24 +18,26 @@ export default {
   },
 } as ComponentMeta<typeof TextAreaField>;
 
-const validText = 'tacocat';
-const errorText = `Value must be "${validText}".`;
-const clearErrorText = (errText: string, val:string): boolean => (errText === errorText && val === validText);
+const emptyErrorText = 'This field cannot be blank.';
+const genericErrorText = 'Invalid entry.';
 
-const Template: ComponentStory<typeof TextAreaField> = ({ value, invalid, ...args }: TextAreaFieldProps) => {
-  const [val, setVal] = React.useState<string>(value ?? '');
-  const [touched, setTouched] = React.useState<boolean>(args.touched ?? false);
+const Template: ComponentStory<typeof TextAreaField> = ({ value, ...args }: TextAreaFieldProps) => {
+  const [val, setVal] = React.useState<string>(value || '');
+  const [isTouched, setIsTouched] = React.useState<boolean>(args.touched || args.invalid || false);
 
   const containerWidth = 'w-96';
-  
-  const shouldClearInvalid = React.useMemo(() => (
-    clearErrorText(args.errorText || '', val)
-  ), [args.errorText, val]);
+
+  const isInvalidEmptyState = React.useMemo(() => (
+    args.required && !val && isTouched
+  ), [args.required, val, isTouched]);
 
   const isInvalid = React.useMemo(() => (
-    (args.required && !val) || (invalid && !shouldClearInvalid)
-  ), [args.required, val, invalid, shouldClearInvalid]);
+    args.invalid || isInvalidEmptyState
+  ), [args.invalid, isInvalidEmptyState]);
 
+  const errorText = React.useMemo(() => (
+    isInvalidEmptyState ? emptyErrorText : (args.errorText || genericErrorText)
+  ), [isInvalidEmptyState, args.errorText]);
 
   React.useEffect(() => {
     setVal(value ?? '');
@@ -46,32 +48,40 @@ const Template: ComponentStory<typeof TextAreaField> = ({ value, invalid, ...arg
       <TextAreaField
         {...args}
         rows={4}
-        invalid={isInvalid}
         value={val}
+        invalid={isInvalid}
+        touched={isTouched || isInvalid}
+        errorText={errorText}
         onChange={setVal}
-        touched={touched}
-        onBlur={() => setTouched(true)}
+        onBlur={() => setIsTouched(true)}
       />
     </div>
   );
 };
 
-export const DefaultTextAreaField = Template.bind({});
-export const DisabledTextAreaField = Template.bind({});
-export const InvalidTextAreaField = Template.bind({});
-export const ReadOnlyTextAreaField = Template.bind({});
+export const Default = Template.bind({});
+export const DisabledTextArea = Template.bind({});
+export const InvalidTextArea = Template.bind({});
+export const ReadOnlyTextArea = Template.bind({});
+export const RequiredTextArea = Template.bind({});
 
-InvalidTextAreaField.args = {
-  required: true,
-  touched: true,
-  errorText: 'This field cannot be blank.',
-};
+Default.args = {};
 
-DisabledTextAreaField.args = {
+DisabledTextArea.args = {
   disabled: true,
 };
 
-ReadOnlyTextAreaField.args = {
+InvalidTextArea.args = {
+  required: true,
+  touched: true,
+  invalid: true,
+};
+
+ReadOnlyTextArea.args = {
   readOnly: true,
   value: 'A strange book about a cat and a hat and managing chaotic elements one cannot predict.',
+};
+
+RequiredTextArea.args = {
+  required: true,
 };
