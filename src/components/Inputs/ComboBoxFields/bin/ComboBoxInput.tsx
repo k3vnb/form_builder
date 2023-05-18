@@ -2,6 +2,7 @@ import React from 'react';
 import { Combobox } from '@headlessui/react';
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { Options, OptionType } from '.';
+import { getInputFieldStyles } from '../../util';
 import { Nullable } from '../../../../var/types';
 
 export interface ComboBoxSelectProps {
@@ -27,53 +28,25 @@ export const ComboBoxInput = ({
 }: ComboBoxSelectProps) => {
   const displayText: string = value?.display || '';
 
-  const [
-    inputClassNames,
-    buttonClassNames,
-    iconClassNames,
-  ] = React.useMemo((): string[] => ([
-    getInputContainerClassNames(invalid, disabled, readOnly),
-    getButtonClassNames(readOnly),
-    getIconClassNames(invalid, disabled),
-  ]), [invalid, readOnly, disabled]);
+  const fieldStyles = React.useMemo(() => (
+    getInputFieldStyles(styles, { invalid, disabled, readOnly })
+  ), [invalid, disabled, readOnly]);
 
   return (
     <div className="relative">
       <Combobox.Input
         placeholder={placeholder}
-        className={inputClassNames}
+        className={fieldStyles.inputContainer}
         onChange={(event) => onQueryChange(event.target.value)}
         displayValue={() => displayText}
       />
-      <Combobox.Button className={buttonClassNames}>
-        <ChevronUpDownIcon className={iconClassNames} aria-hidden="true" />
+      <Combobox.Button className={fieldStyles.buttonContainer}>
+        <ChevronUpDownIcon className={fieldStyles.icon} aria-hidden="true" />
       </Combobox.Button>
       <Options open={open} options={options} />
     </div>
   );
 }
-
-const getInputContainerClassNames = (invalid: boolean, disabled: boolean, readOnly: boolean): string => {
-  return [
-    styles.inputContainer.baseStyles,
-    invalid && styles.inputContainer.invalid,
-    (readOnly && styles.inputContainer.readOnly) || (disabled && styles.inputContainer.disabled),
-  ].filter(Boolean).join(' ');
-};
-
-const getButtonClassNames = (readOnly: boolean): string => {
-  return [
-    styles.buttonContainer.baseStyles,
-    readOnly && styles.buttonContainer.readOnly
-  ].filter(Boolean).join(' ');
-};
-
-const getIconClassNames = (invalid: boolean, disabled: boolean): string => {
-  return [
-    styles.icon.baseStyles,
-    (invalid && styles.icon.invalid) || (disabled && styles.icon.disabled) || styles.icon.default
-  ].join(' ');
-};
 
 const styles = {
   inputContainer: {
@@ -86,11 +59,6 @@ const styles = {
   buttonContainer: {
     baseStyles: 'absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none',
     readOnly: 'hidden',
-  },
-  placeholder: {
-    baseStyles: 'block truncate',
-    default: 'text-gray-400',
-    invalid: 'text-red-300',
   },
   icon: {
     baseStyles: 'h-5 w-5',
