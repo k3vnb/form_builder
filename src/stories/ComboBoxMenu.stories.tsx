@@ -1,19 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { ComboBoxField, ComboBoxFieldProps } from '../components/Inputs';
-
-const options = [
-  { id: '1', display: 'Tom Cooper' },
-  { id: '2', display: 'Syd Richmond' },
-  { id: '3', display: 'Derrick Lowry' },
-  { id: '4', display: 'Tom Cook' },
-  { id: '5', display: 'Ayesha McLaughlin' },
-  { id: '6', display: 'Curtis Mathis' },
-  { id: '7', display: 'Helen Hilton' },
-  { id: '8', display: 'Mark Sharpe' },
-  { id: '9', display: 'Lucie Turner' },
-  { id: '10', display: 'Effie Hancock' },
-];
+import { userLists } from './__mocks';
 
 export default {
   title: 'Form/Menus/ComboBox Field',
@@ -27,7 +15,7 @@ export default {
     disabled: false,
     hideLabel: false,
     inlineLabel: false,
-    options,
+    options: userLists.default,
     value: '',
   },
 } as ComponentMeta<typeof ComboBoxField>;
@@ -76,15 +64,13 @@ DefaultComboBox.args = {};
 export const WithDisabledOptions = Template.bind({});
 
 WithDisabledOptions.args = {
-  options: options.map((o, i) => ({ ...o, disabled: (i+1) % 4 === 0 })),
+  options: userLists.withSomeDisabled,
 };
 
 export const WithOptionDescriptions = Template.bind({});
 
-const formatUserName = (name: string) => '@' + name.split(' ').map((n,i) => (n.charAt(0).toLowerCase() + (i === 0 ? '' : n.slice(1)))).join('');
-
 WithOptionDescriptions.args = {
-  options: options.map((o) => ({ ...o, description: formatUserName(o.display) })),
+  options: userLists.withDescriptions,
 };
 
 export const InvalidComboBox = Template.bind({});
