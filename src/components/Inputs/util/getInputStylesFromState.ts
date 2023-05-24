@@ -1,7 +1,7 @@
 
 import { InputState, InputStateStyleProps } from '../types';
 
-export interface IInputStyles<T> {
+interface IInputStyles<T> {
   [key: string]: T;
 }
 
@@ -9,7 +9,7 @@ const shouldRenderDefaultStyles = (state: InputState): boolean => (
   !state.invalid && !state.readOnly && !state.disabled && !state.active && !state.selected
 );
 
-export const getStyles = (styles: InputStateStyleProps, state: InputState): string => (
+const getStyles = (styles: InputStateStyleProps, state: InputState): string => (
   [
     // base styles are always applied
     styles.baseStyles,

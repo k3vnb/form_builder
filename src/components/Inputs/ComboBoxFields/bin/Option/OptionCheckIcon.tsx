@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckIcon } from '@heroicons/react/20/solid';
+import { getInputStyles } from '../../../util';
 
 interface OptionCheckIconProps {
   selected?: boolean;
@@ -11,20 +12,20 @@ export const OptionCheckIcon = ({
   active = false,
 }: OptionCheckIconProps) => {
 
-  const containerClassNames = React.useMemo(() => (
-    `${styles.container.baseStyles} ${active ? styles.container.active : styles.container.default}`
-  ), [active]);
+  const styles = React.useMemo(() => (
+    getInputStyles(stylesheet, { selected, active })
+  ), [active, selected]);
 
   if (!selected) return null;
 
   return (
-    <span className={containerClassNames}>
+    <span className={styles.container}>
       <CheckIcon className={styles.icon} aria-hidden="true" />
     </span>
   );
 }
 
-const styles = {
+const stylesheet = {
   container: {
     baseStyles: 'absolute inset-y-0 left-0 flex items-center pl-1.5',
     active: 'text-white',

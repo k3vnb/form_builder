@@ -9,8 +9,8 @@ export interface RadioFieldProps extends RadioInputCoreProps {
   disabled?: boolean;
   readOnly?: boolean;
   description?: string;
-  onChange?: () => void;
   alignRadioButtonRight?: boolean;
+  onChange?: () => void;
 }
 
 export const RadioField = ({
@@ -37,18 +37,14 @@ export const RadioField = ({
     return attrs;
   }, [ariaDescribedById, disabled, readOnly]);
 
-  const [containerClassNames, labelContainerClassNames] = React.useMemo(() => {
-    const containerBaseStyles = styles.container.baseStyles;
-    const containerAlignmentStyles = alignRadioButtonRight ? styles.container.rowReverse : styles.container.default;
+  const styles = React.useMemo(() => {
+    const rowReverse = alignRadioButtonRight;
 
-    let containerSelectedStyles = styles.container.enabled;
-    if (disabled) containerSelectedStyles = checked ? styles.container.disabled.selected : styles.container.disabled.unselected;
-    if (readOnly) containerSelectedStyles = checked ? styles.container.readOnly.selected : styles.container.readOnly.unselected;
-
-    const containerStyles = [containerBaseStyles, containerAlignmentStyles, containerSelectedStyles].filter(Boolean).join(' ');
-    const labelStyles = alignRadioButtonRight ? styles.labelContainer.rowReverse : styles.labelContainer.default;
-  
-    return [ containerStyles, labelStyles ];
+    return {
+      ...stylesheet,
+      container: getContainerStyles({ rowReverse, disabled, readOnly, checked }),
+      labelContainer: getLabelContainerStyles({ rowReverse }),
+    };
   }, [alignRadioButtonRight, checked, readOnly, disabled]);
 
   const handleChange = () => {
@@ -57,17 +53,17 @@ export const RadioField = ({
   }
 
   return (
-    <div className={containerClassNames} onClick={handleChange}>
+    <div className={styles.container} onClick={handleChange}>
       <RadioInput
         id={id}
-        disabled={disabled}
+        disabled={disabled || readOnly}
         readOnly={readOnly}
         checked={checked}
         {...ariaAttributes}
         {...htmlInputProps}
         onChange={onChange}
       />
-      <div className={labelContainerClassNames}>
+      <div className={styles.labelContainer}>
         <label htmlFor={id} className={styles.label}>
           {label}
         </label>
@@ -81,7 +77,22 @@ export const RadioField = ({
   );
 }
 
-const styles = {
+const getContainerStyles = ({ rowReverse, disabled, readOnly, checked = false }: Record<string, boolean | undefined>) => {
+  const { container } = stylesheet;
+  const alignmentStyles = rowReverse ? container.rowReverse : container.default;
+
+  let selectedStyles = container.enabled;
+  if (disabled) selectedStyles = checked ? container.disabled.selected : container.disabled.unselected;
+  if (readOnly) selectedStyles = checked ? container.readOnly.selected : container.readOnly.unselected;
+
+  return [container.baseStyles, alignmentStyles, selectedStyles].filter(Boolean).join(' ');
+}
+
+const getLabelContainerStyles = ({ rowReverse }: Record<string, boolean>) => (
+  rowReverse ? stylesheet.labelContainer.rowReverse : stylesheet.labelContainer.default
+);
+
+const stylesheet = {
   container: {
     baseStyles: 'relative flex items-center py-2.5',
     default: 'pl-2',
