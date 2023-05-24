@@ -19,7 +19,7 @@ export const TextArea = ({
   disabled = false,
   readOnly = false,
   onChange = () => {},
-  ...htmlAreaProps
+  ...htmlTextAreaProps
 }: TextAreaCoreProps): JSX.Element => {
 
   const classNames: string = React.useMemo(() => getTextAreaClassNames(invalid, readOnly, disabled), [invalid, readOnly, disabled]);
@@ -28,11 +28,11 @@ export const TextArea = ({
     <div className="relative rounded-md">
       <textarea
         className={classNames}
-        value={value ?? ''}
+        value={value}
         onChange={e => onChange(e.target.value)}
         disabled={disabled}
         readOnly={readOnly}
-        {...htmlAreaProps}
+        {...htmlTextAreaProps}
       />
     </div>
   );
