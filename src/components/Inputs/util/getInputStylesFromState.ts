@@ -1,10 +1,10 @@
 
-import { InputFieldStyleInterface, InputFieldStateType, InputFieldStyleType } from '../types';
+import { InputState, InputStateStyleProps, InputStateStyleObject } from '../types';
 
-type InputFieldStyleKeys = keyof InputFieldStyleInterface;
-type InputFieldStyleReturnType = Record<InputFieldStyleKeys, string>;
+type TInputStateStyleKey = keyof InputStateStyleObject;
+type TR = Record<string, string>;
 
-export const getStyles = (styles: InputFieldStyleType, state: InputFieldStateType): string => (
+export const getStyles = (styles: InputStateStyleProps, state: InputState): string => (
   [
     // base styles are always applied
     styles.baseStyles,
@@ -17,10 +17,10 @@ export const getStyles = (styles: InputFieldStyleType, state: InputFieldStateTyp
   ].filter(Boolean).join(' ')
 );
 
-export const getInputFieldStyles = (styles: InputFieldStyleInterface, state: InputFieldStateType): InputFieldStyleReturnType => {
-  const keys = Object.keys(styles) as InputFieldStyleKeys[];
+export const getInputStylesFromState = (styles: InputStateStyleObject, state: InputState): TR => {
+  const keys = Object.keys(styles) as TInputStateStyleKey[];
   return keys.reduce((acc, key) => {
     acc[key] = getStyles(styles[key], state);
     return acc;
-  }, {} as InputFieldStyleReturnType);
+  }, {} as TR);
 };

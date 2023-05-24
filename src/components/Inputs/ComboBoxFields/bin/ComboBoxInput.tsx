@@ -2,7 +2,7 @@ import React from 'react';
 import { Combobox } from '@headlessui/react';
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { Options, OptionType } from '.';
-import { getInputFieldStyles } from '../../util';
+import { getInputStylesFromState } from '../../util';
 import { Nullable } from '../../../../var/types';
 
 export interface ComboBoxSelectProps {
@@ -29,7 +29,7 @@ export const ComboBoxInput = ({
   const displayText: string = value?.display || '';
 
   const fieldStyles = React.useMemo(() => (
-    getInputFieldStyles(styles, { invalid, disabled, readOnly })
+    getInputStylesFromState(styles, { invalid, disabled, readOnly })
   ), [invalid, disabled, readOnly]);
 
   return (
