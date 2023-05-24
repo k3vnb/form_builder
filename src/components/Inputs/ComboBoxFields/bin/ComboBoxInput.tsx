@@ -1,8 +1,10 @@
 import React from 'react';
 import { Combobox } from '@headlessui/react';
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
+
 import { Options, OptionType } from '.';
-import { getInputStylesFromState } from '../../util';
+
+import { getInputStyles } from '../../util';
 import { Nullable } from '../../../../var/types';
 
 export interface ComboBoxSelectProps {
@@ -28,27 +30,27 @@ export const ComboBoxInput = ({
 }: ComboBoxSelectProps) => {
   const displayText: string = value?.display || '';
 
-  const fieldStyles = React.useMemo(() => (
-    getInputStylesFromState(styles, { invalid, disabled, readOnly })
+  const styles = React.useMemo(() => (
+    getInputStyles(stylesheet, { invalid, disabled, readOnly })
   ), [invalid, disabled, readOnly]);
 
   return (
     <div className="relative">
       <Combobox.Input
         placeholder={placeholder}
-        className={fieldStyles.inputContainer}
+        className={styles.inputContainer}
         onChange={(event) => onQueryChange(event.target.value)}
         displayValue={() => displayText}
       />
-      <Combobox.Button className={fieldStyles.buttonContainer}>
-        <ChevronUpDownIcon className={fieldStyles.icon} aria-hidden="true" />
+      <Combobox.Button className={styles.buttonContainer}>
+        <ChevronUpDownIcon className={styles.icon} aria-hidden="true" />
       </Combobox.Button>
       <Options open={open} options={options} />
     </div>
   );
 }
 
-const styles = {
+const stylesheet = {
   inputContainer: {
     baseStyles: 'w-full block truncate rounded-md border-0 py-1.5 pl-3 pr-10 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6',
     default: 'bg-white text-gray-900 focus:ring-indigo-600 ring-gray-300',
@@ -66,4 +68,4 @@ const styles = {
     disabled: 'text-gray-300',
     invalid: 'text-red-300',
   },
-};
+}

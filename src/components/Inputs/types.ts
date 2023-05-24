@@ -2,6 +2,8 @@ export type InputState = {
   invalid?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
+  active?: boolean;
+  selected?: boolean;
 }
 
 export type InputStateStyleProps = {
@@ -10,6 +12,6 @@ export type InputStateStyleProps = {
   invalid?: string;
   disabled?: string;
   readOnly?: string;
+  active?: string;
+  selected?: string;
 }
-
-export type InputStateStyleObject = Record<string, InputStateStyleProps>;

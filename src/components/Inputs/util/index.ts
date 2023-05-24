@@ -1,1 +1,1 @@
-export { getInputStylesFromState } from './getInputStylesFromState';
+export { getInputStyles } from './getInputStylesFromState';
