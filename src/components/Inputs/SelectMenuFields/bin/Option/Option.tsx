@@ -41,11 +41,11 @@ export const Option = ({ value }: OptionProps) => {
             )}
             <OptionCheckIcon selected={selected} active={active} />
           </>
-        )
+        );
       }}
     </Listbox.Option>
-  )
-}
+  );
+};
 
 const stylesheet = {
   container: {

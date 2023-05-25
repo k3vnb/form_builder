@@ -8,7 +8,7 @@ import { getInputStyles } from '../../util';
 import { formatIdFromString } from '../../../../util';
 import { getAriaDescribedById, getInputAriaAttributes } from '../../bin/util';
 
-export interface CheckboxGroupFieldProps extends Omit<React.HTMLAttributes<HTMLFieldSetElement> , 'onChange'> {
+export interface CheckboxGroupFieldProps extends Omit<React.HTMLAttributes<HTMLFieldSetElement>, 'onChange'> {
   legend: string;
   touched?: boolean;
   invalid?: boolean;
@@ -66,7 +66,7 @@ export const CheckboxGroupField = ({
 
   const updateValues = React.useCallback((val: string) => {
     if (values.includes(val)) return onChange(values.filter((v) => v !== val));
-    onChange([...values, val]);
+    return onChange([...values, val]);
   }, [values, onChange]);
 
   return (
@@ -111,7 +111,7 @@ export const CheckboxGroupField = ({
       </InputFieldLayout.MainContainer>
     </fieldset>
   );
-}
+};
 
 const stylesheet = {
   container: {
@@ -121,4 +121,4 @@ const stylesheet = {
   },
   withDivide: 'divide-y divide-gray-200',
   hideDivide: 'divide-y divide-transparent',
-}
+};

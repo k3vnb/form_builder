@@ -28,7 +28,7 @@ const Template: ComponentStory<typeof TextInputField> = ({ value, invalid, ...ar
   const [touched, setTouched] = React.useState<boolean>(args.touched ?? false);
 
   const containerStyle = { maxWidth: args.inlineLabel ? '480px' : '400px' };
-  
+
   const shouldClearInvalid = React.useMemo(() => (
     clearErrorText(args.errorText || '', val)
   ), [args.errorText, val]);

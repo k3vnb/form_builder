@@ -4,7 +4,7 @@ import { getInputStyles } from '../../util';
 export interface RadioInputCoreProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   onChange?: () => void;
 }
-  
+
 export const RadioInput = (props: RadioInputCoreProps) => {
   const {
     disabled = false,
@@ -28,7 +28,7 @@ export const RadioInput = (props: RadioInputCoreProps) => {
       />
     </div>
   );
-}
+};
 
 const stylesheet = {
   container: 'flex h-6 items-center',
@@ -38,4 +38,4 @@ const stylesheet = {
     disabled: 'cursor-not-allowed disabled:border-transparent text-gray-400 bg-gray-200',
     readOnly: 'cursor-not-allowed text-purple-600 bg-indigo-200',
   },
-}
+};

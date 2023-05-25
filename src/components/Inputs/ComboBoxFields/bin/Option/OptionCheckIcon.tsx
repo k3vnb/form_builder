@@ -23,7 +23,7 @@ export const OptionCheckIcon = ({
       <CheckIcon className={styles.icon} aria-hidden="true" />
     </span>
   );
-}
+};
 
 const stylesheet = {
   container: {

@@ -23,7 +23,7 @@ export const CheckboxField = ({
   onChange = () => {},
   ...htmlInputProps
 }: CheckboxFieldProps) => {
-  
+
   const ariaDescribedById = React.useMemo(() => (
     description ? `${id}-description` : undefined
   ), [id, description]);
@@ -41,7 +41,6 @@ export const CheckboxField = ({
     container: alignCheckboxRight ? stylesheet.container.rowReverse : stylesheet.container.default,
     labelContainer: alignCheckboxRight ? stylesheet.labelContainer.rowReverse : stylesheet.labelContainer.default,
   }), [alignCheckboxRight]);
-
 
   return (
     <div className={styles.container}>
@@ -65,7 +64,7 @@ export const CheckboxField = ({
       </div>
     </div>
   );
-}
+};
 
 const stylesheet = {
   container: {

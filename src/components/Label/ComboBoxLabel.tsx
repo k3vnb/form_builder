@@ -10,9 +10,9 @@ export const ComboBoxLabel = ({
   srOnly = false,
   required = false,
 }: ComboBoxLabelProps) => {
-  
+
   if (srOnly) return <Combobox.Label className="sr-only">{text}</Combobox.Label>;
-  
+
   return (
     <LabelContainer inline={inline} required={required}>
       <Combobox.Label className={labelClassNames}>

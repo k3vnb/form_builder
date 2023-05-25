@@ -1,5 +1,5 @@
-const formatUserName = (name: string) => '@' + name.split(' ').map((n,i) => (n.charAt(0).toLowerCase() + (i === 0 ? '' : n.slice(1)))).join('');
-const disableSomeOptions = (options: any[]) => options.map((o, i) => ({ ...o, disabled: (i+1) % 4 === 0 }));
+const formatUserName = (name: string) => '@' + name.split(' ').map((n, i) => (n.charAt(0).toLowerCase() + (i === 0 ? '' : n.slice(1)))).join('');
+const disableSomeOptions = (options: any[]) => options.map((o, i) => ({ ...o, disabled: (i + 1) % 4 === 0 }));
 const addUserNamesAsDescriptions = (options: any[]) => options.map((o) => ({ ...o, description: formatUserName(o.display) }));
 
 export const userLists = {

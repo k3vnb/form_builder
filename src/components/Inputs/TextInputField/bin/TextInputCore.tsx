@@ -36,7 +36,7 @@ export const TextInput = ({
       <input
         className={styles.inputEl}
         value={value || ''}
-        onChange={e => onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         readOnly={readOnly}
         {...htmlInputProps}
@@ -61,4 +61,4 @@ const stylesheet = {
     invalid: 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500',
     readOnly: 'bg-indigo-50 text-gray-600 placeholder:text-gray-500 placeholder:font-normal ring-gray-300 cursor-not-allowed tracking-wide',
   },
-}
+};

@@ -29,7 +29,7 @@ const Template: ComponentStory<typeof CheckboxGroupField> = ({ invalid, values, 
   const [touched, setTouched] = React.useState<boolean>(args.touched ?? false);
 
   const containerStyle = { maxWidth: args.inlineLegend ? '640px' : '480px' };
-  
+
   const isInvalid = React.useMemo(() => (
     (args.required && !vals.length && touched) || invalid
   ), [args.required, vals, touched, invalid]);

@@ -19,7 +19,7 @@ export const InputHelperText = ({
   children = null,
 }: InputHelperTextProps): JSX.Element => {
   const minHeight = '1.25rem'; // 20px -- matches tailwind default for 'text-sm'
-  
+
   if (!show || !id) return <div style={{ minHeight }} />;
 
   const textColor = isInvalid ? 'text-red-600' : 'text-gray-500';
@@ -30,4 +30,4 @@ export const InputHelperText = ({
       {text || children}
     </div>
   );
-}
+};

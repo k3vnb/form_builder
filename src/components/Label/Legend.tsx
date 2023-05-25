@@ -9,9 +9,9 @@ export const Legend = ({
   srOnly = false,
   required = false,
 }: LegendProps) => {
-  
+
   if (srOnly) return <legend className="sr-only">{text}</legend>;
-  
+
   return (
     <LabelContainer inline={inline} required={required}>
       <legend className={labelClassNames}>

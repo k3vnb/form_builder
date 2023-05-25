@@ -47,7 +47,7 @@ export const ComboBoxInput = ({
       <Options open={open} options={options} />
     </div>
   );
-}
+};
 
 const stylesheet = {
   inputContainer: {
@@ -67,4 +67,4 @@ const stylesheet = {
     disabled: 'text-gray-300',
     invalid: 'text-red-300',
   },
-}
+};

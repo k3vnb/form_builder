@@ -25,4 +25,3 @@ export const getInputAriaAttributes = ({
     'aria-invalid': isInvalid ? 'true' : 'false',
   };
 };
-
