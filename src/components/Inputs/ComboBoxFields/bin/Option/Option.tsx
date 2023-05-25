@@ -1,5 +1,5 @@
 import React from 'react';
-import { Listbox } from '@headlessui/react';
+import { Combobox } from '@headlessui/react';
 import { OptionCheckIcon } from './OptionCheckIcon';
 
 import { getInputStyles } from '../../../util';
@@ -22,7 +22,7 @@ export const Option = ({ value }: OptionProps) => {
   const getContainerStyles = (state: InputState) => getStyles(state).container;
 
   return (
-    <Listbox.Option
+    <Combobox.Option
       disabled={value.disabled}
       className={({ active, selected, disabled }) => getContainerStyles({ active, selected, disabled })}
       value={value}
@@ -43,7 +43,7 @@ export const Option = ({ value }: OptionProps) => {
           </>
         )
       }}
-    </Listbox.Option>
+    </Combobox.Option>
   )
 }
 
