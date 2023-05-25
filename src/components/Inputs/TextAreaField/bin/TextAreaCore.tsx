@@ -32,14 +32,14 @@ export const TextArea = ({
       <textarea
         className={styles.textAreaEl}
         value={value}
-        onChange={e => onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
         readOnly={readOnly}
         {...htmlTextAreaProps}
       />
     </div>
   );
-}
+};
 
 const stylesheet = {
   textAreaContainer: 'relative rounded-md',
@@ -50,4 +50,4 @@ const stylesheet = {
     readOnly: 'bg-indigo-50 text-gray-600 placeholder:text-gray-500 placeholder:font-normal ring-gray-300 cursor-not-allowed tracking-wide',
     disabled: 'bg-gray-50 text-gray-500 placeholder:text-gray-400 ring-gray-200 cursor-not-allowed'
   },
-}
+};

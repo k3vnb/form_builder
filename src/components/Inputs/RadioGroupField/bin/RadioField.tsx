@@ -24,7 +24,7 @@ export const RadioField = ({
   onChange = () => {},
   ...htmlInputProps
 }: RadioFieldProps) => {
-  
+
   const ariaDescribedById = React.useMemo(() => (
     description ? `${id}-description` : undefined
   ), [id, description]);
@@ -50,9 +50,11 @@ export const RadioField = ({
   const handleChange = () => {
     if (readOnly || disabled) return;
     onChange();
-  }
+  };
 
   return (
+    // TODO: fix eslint errors
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div className={styles.container} onClick={handleChange}>
       <RadioInput
         id={id}
@@ -75,7 +77,7 @@ export const RadioField = ({
       </div>
     </div>
   );
-}
+};
 
 const getContainerStyles = ({ rowReverse, disabled, readOnly, checked = false }: Record<string, boolean | undefined>) => {
   const { container } = stylesheet;
@@ -86,7 +88,7 @@ const getContainerStyles = ({ rowReverse, disabled, readOnly, checked = false }:
   if (readOnly) selectedStyles = checked ? container.readOnly.selected : container.readOnly.unselected;
 
   return [container.baseStyles, alignmentStyles, selectedStyles].filter(Boolean).join(' ');
-}
+};
 
 const getLabelContainerStyles = ({ rowReverse }: Record<string, boolean>) => (
   rowReverse ? stylesheet.labelContainer.rowReverse : stylesheet.labelContainer.default

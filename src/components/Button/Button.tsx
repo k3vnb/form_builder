@@ -14,7 +14,7 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
 export const Button = (props: ButtonProps): JSX.Element => {
   const {
     text,
-    title='',
+    title = '',
     variant,
     size,
     colorTheme,
@@ -77,7 +77,7 @@ const buttonClassNames = {
 const getButtonStyles = (props: ButtonProps): string => {
   const { size = 'md', variant = 'primary', colorTheme = 'default', rounded = 'false' } = props;
 
-  const baseStyles = buttonClassNames.baseStyles;
+  const { baseStyles } = buttonClassNames;
   const sizeStyles = buttonClassNames.sizes[size];
   const variantBaseStyles = buttonClassNames.variants[variant].baseStyles;
   const variantStyles = buttonClassNames.variants[variant][colorTheme];
@@ -88,6 +88,6 @@ const getButtonStyles = (props: ButtonProps): string => {
   };
 
   const classNames = [baseStyles, sizeStyles, variantBaseStyles, variantStyles, getRoundedStyles()].filter(Boolean).join(' ');
-  
+
   return classNames;
 };

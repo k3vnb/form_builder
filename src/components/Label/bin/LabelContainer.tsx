@@ -22,7 +22,7 @@ export const LabelContainer = ({
   );
 };
 
-const styles ={
+const styles = {
   default: 'flex justify-between items-end gap-x-4',
   inlineLabel: 'flex gap-x-1.5 whitespace-pre-wrap',
-}
+};

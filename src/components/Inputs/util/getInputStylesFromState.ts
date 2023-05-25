@@ -1,4 +1,3 @@
-
 import { InputState, InputStateStyleProps } from '../types';
 
 interface IInputStyles<T> {
@@ -26,7 +25,6 @@ const getStyles = (styles: InputStateStyleProps, state: InputState): string => (
   ].filter(Boolean).join(' ')
 );
 
-
 export const getInputStyles = (
   styles: IInputStyles<string | InputStateStyleProps>,
   state: InputState = {},
@@ -39,4 +37,4 @@ export const getInputStyles = (
       : getStyles(value, state);
     return acc;
   }, {} as IInputStyles<string>);
-}
+};

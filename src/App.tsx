@@ -8,10 +8,9 @@ const App = (): JSX.Element => {
         <h1 className="text-pink-600 font-bold text-5xl tracking-wider">
           Form Builder
         </h1>
-        
       </header>
     </div>
   );
-}
+};
 
 export default App;

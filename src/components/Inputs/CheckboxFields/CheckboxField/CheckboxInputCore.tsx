@@ -4,7 +4,7 @@ import { getInputStyles } from '../../util';
 export interface CheckboxInputCoreProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   onChange?: () => void;
 }
-  
+
 export const CheckboxInput = (props: CheckboxInputCoreProps) => {
   const {
     disabled = false,
@@ -28,7 +28,7 @@ export const CheckboxInput = (props: CheckboxInputCoreProps) => {
       />
     </div>
   );
-}
+};
 
 const stylesheet = {
   container: 'flex h-6 items-center',

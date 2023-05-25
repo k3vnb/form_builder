@@ -7,7 +7,7 @@ import { getInputStyles } from '../util';
 import { formatIdFromString } from '../../../util';
 import { getAriaDescribedById, getInputAriaAttributes } from '../bin/util';
 
-export interface RadioGroupFieldProps extends Omit<React.HTMLAttributes<HTMLFieldSetElement> , 'onChange'> {
+export interface RadioGroupFieldProps extends Omit<React.HTMLAttributes<HTMLFieldSetElement>, 'onChange'> {
   legend: string;
   touched?: boolean;
   invalid?: boolean;
@@ -104,7 +104,7 @@ export const RadioGroupField = ({
       </InputFieldLayout.MainContainer>
     </fieldset>
   );
-}
+};
 
 const stylesheet = {
   container: {
@@ -114,4 +114,4 @@ const stylesheet = {
   },
   withDivide: 'divide-y divide-gray-200',
   hideDivide: 'divide-y divide-transparent',
-}
+};

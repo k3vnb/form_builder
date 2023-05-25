@@ -81,4 +81,4 @@ export const TextAreaField = (props: TextAreaFieldProps): JSX.Element => {
       </InputFieldLayout.InputContainer>
     </InputFieldLayout.MainContainer>
   );
-}
+};

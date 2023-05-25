@@ -10,9 +10,9 @@ export const ListBoxLabel = ({
   srOnly = false,
   required = false,
 }: ListBoxLabelProps) => {
-  
+
   if (srOnly) return <Listbox.Label className="sr-only">{text}</Listbox.Label>;
-  
+
   return (
     <LabelContainer inline={inline} required={required}>
       <Listbox.Label className={labelClassNames}>
