@@ -1,13 +1,14 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { SelectMenuField, SelectMenuFieldProps } from '../components/Inputs';
+import { ComboBoxField, ComboBoxFieldProps } from '../components/Inputs';
 import { userLists } from './__mocks';
 
 export default {
-  title: 'Form/Menus/SelectMenu Field',
-  component: SelectMenuField,
+  title: 'Form/Menus/ComboBox Field',
+  component: ComboBoxField,
   args: {
     label: 'Assign to',
+    placeholder: 'Search or select a team member',
     touched: false,
     required: false,
     readOnly: false,
@@ -17,9 +18,9 @@ export default {
     options: userLists.default,
     value: '',
   },
-} as ComponentMeta<typeof SelectMenuField>;
+} as ComponentMeta<typeof ComboBoxField>;
 
-const Template: ComponentStory<typeof SelectMenuField> = ({ value, invalid, ...args }: SelectMenuFieldProps) => {
+const Template: ComponentStory<typeof ComboBoxField> = ({ value, invalid, ...args }: ComboBoxFieldProps) => {
   const [val, setVal] = React.useState<string>(value || '');
   const [touched, setTouched] = React.useState<boolean>(args.touched || false);
   const [showInvalid, setShowInvalid] = React.useState<boolean>(invalid || false);
@@ -45,7 +46,7 @@ const Template: ComponentStory<typeof SelectMenuField> = ({ value, invalid, ...a
 
   return (
     <div style={containerStyle}>
-      <SelectMenuField
+      <ComboBoxField
         {...args}
         value={val}
         invalid={showInvalid}
@@ -57,21 +58,21 @@ const Template: ComponentStory<typeof SelectMenuField> = ({ value, invalid, ...a
 };
 
 export const Default = Template.bind({});
-export const DisabledSelectMenu = Template.bind({});
-export const InvalidSelectMenu = Template.bind({});
-export const ReadOnlySelectMenu = Template.bind({});
-export const RequiredSelectMenu = Template.bind({});
+export const DisabledComboBox = Template.bind({});
+export const InvalidComboBox = Template.bind({});
+export const ReadOnlyComboBox = Template.bind({});
+export const RequiredComboBox = Template.bind({});
 export const WithDisabledOptions = Template.bind({});
 export const WithOptionDescriptions = Template.bind({});
 
 Default.args = {};
 
-DisabledSelectMenu.args = {
+DisabledComboBox.args = {
   disabled: true,
   value: userLists.default[1].id,
 };
 
-InvalidSelectMenu.args = {
+InvalidComboBox.args = {
   invalid: true,
   touched: true,
   required: true,
@@ -79,12 +80,12 @@ InvalidSelectMenu.args = {
   errorText: 'This field is required.',
 };
 
-ReadOnlySelectMenu.args = {
+ReadOnlyComboBox.args = {
   value: userLists.default[1].id,
   readOnly: true,
 };
 
-RequiredSelectMenu.args = {
+RequiredComboBox.args = {
   required: true,
 };
 

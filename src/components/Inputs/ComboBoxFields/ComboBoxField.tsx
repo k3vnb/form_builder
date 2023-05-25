@@ -1,13 +1,13 @@
 import React from 'react';
-import { Listbox } from '@headlessui/react';
+import { Combobox } from '@headlessui/react';
 
-import { ListBoxLabel } from '../../Label';
-import { OptionType, ListBoxSelect } from './bin';
+import { ComboBoxLabel } from '../../Label';
+import { OptionType, ComboBoxInput } from './bin';
 import { InputHelperText, InputFieldLayout } from '../bin';
 
 import { formatIdFromString } from '../../../util';
 
-export interface SelectMenuFieldProps {
+export interface ComboBoxFieldProps {
   label: string;
   value?: string;
   options: OptionType[];
@@ -16,17 +16,17 @@ export interface SelectMenuFieldProps {
   disabled?: boolean;
   readOnly?: boolean;
   required?: boolean;
-  inlineLabel?: boolean;
   hideLabel?: boolean;
+  inlineLabel?: boolean;
+  placeholder?: string;
   errorText?: string;
   helperText?: string;
   onChange: (value: string) => void;
 }
 
-export const SelectMenuField = ({
+export const ComboBoxField = ({
   label,
   value = '',
-  options = [],
   touched = false,
   invalid = false,
   disabled = false,
@@ -34,19 +34,28 @@ export const SelectMenuField = ({
   readOnly = false,
   hideLabel = false,
   inlineLabel = false,
+  placeholder = '',
+  options = [],
   errorText = '',
   helperText = '',
   onChange,
-}: SelectMenuFieldProps) => {
+}: ComboBoxFieldProps) => {
   const selectedOption = options.find((option) => option.id === value) || null;
   const setSelectedOption = (option: OptionType) => onChange(option.id);
+
+  const [query, setQuery] = React.useState<string>('');
 
   const showInvalid: boolean = React.useMemo(() => (touched && invalid), [touched, invalid]);
   const showHelperText: boolean = React.useMemo(() => (showInvalid || !!helperText), [showInvalid, helperText]);
   const helperTextId: string = React.useMemo(() => (showHelperText ? `${formatIdFromString(label)}_help_text` : ''), [label, showHelperText]);
 
+  const getFormattedQuery = () => query.trim().toLowerCase();
+  const getFilteredOptions = () => options.filter((o) => o.display.toLowerCase().includes(getFormattedQuery()));
+  const filteredOptions = !query ? options : getFilteredOptions();
+
   return (
-    <Listbox
+    <Combobox
+      as="div"
       value={selectedOption}
       disabled={disabled || readOnly}
       onChange={setSelectedOption}
@@ -54,7 +63,7 @@ export const SelectMenuField = ({
       {(renderProps) => (
         <InputFieldLayout.MainContainer inlineLabel={inlineLabel}>
           <InputFieldLayout.LabelContainer inlineLabel={inlineLabel} hideLabel={hideLabel}>
-            <ListBoxLabel
+            <ComboBoxLabel
               text={label}
               inline={inlineLabel}
               required={required}
@@ -62,12 +71,14 @@ export const SelectMenuField = ({
             />
           </InputFieldLayout.LabelContainer>
           <InputFieldLayout.InputContainer inlineLabel={inlineLabel} hideLabel={hideLabel}>
-            <ListBoxSelect
+            <ComboBoxInput
               {...renderProps}
-              options={options}
+              options={filteredOptions}
               readOnly={readOnly}
               disabled={disabled}
               invalid={showInvalid}
+              placeholder={placeholder}
+              onQueryChange={setQuery}
             />
             <InputHelperText
               id={helperTextId}
@@ -78,6 +89,6 @@ export const SelectMenuField = ({
           </InputFieldLayout.InputContainer>
         </InputFieldLayout.MainContainer>
       )}
-    </Listbox>
+    </Combobox>
   );
 }

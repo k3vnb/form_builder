@@ -4,6 +4,9 @@ export type { CheckboxFieldProps, CheckboxGroupFieldProps } from './CheckboxFiel
 export { RadioGroupField } from './RadioGroupField';
 export type { RadioGroupFieldProps } from './RadioGroupField';
 
+export { ComboBoxField } from './ComboBoxFields';
+export type { ComboBoxFieldProps } from './ComboBoxFields';
+
 export { SelectMenuField } from './SelectMenuFields';
 export type { SelectMenuFieldProps } from './SelectMenuFields';
 

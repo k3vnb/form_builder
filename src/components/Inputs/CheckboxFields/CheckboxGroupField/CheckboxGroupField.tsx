@@ -1,7 +1,10 @@
 import React from 'react';
+
 import { Legend } from '../../../Label';
 import { InputHelperText, InputFieldLayout } from '../../bin';
 import { CheckboxField, CheckboxFieldProps } from '../CheckboxField';
+
+import { getInputStyles } from '../../util';
 import { formatIdFromString } from '../../../../util';
 import { getAriaDescribedById, getInputAriaAttributes } from '../../bin/util';
 
@@ -53,13 +56,13 @@ export const CheckboxGroupField = ({
     getInputAriaAttributes({ ariaDescribedById, isInvalid: showInvalid })
   ), [ariaDescribedById, showInvalid]);
 
-  const containerClassNames = React.useMemo(() => (
-    showInvalid ? styles.container.invalid : styles.container.default
-  ), [showInvalid]);
+  const styles = React.useMemo(() => (
+    getInputStyles(stylesheet, { invalid: showInvalid, disabled, readOnly })
+  ), [showInvalid, disabled, readOnly]);
 
-  const optionsListClassNames = React.useMemo(() => (
-    showDividers ? styles.optionsList.divider : styles.optionsList.default
-  ), [showDividers]);
+  const optionsListStyles = React.useMemo(() => (
+    showDividers ? styles.withDivide : styles.hideDivide
+  ), [styles, showDividers]);
 
   const updateValues = React.useCallback((val: string) => {
     if (values.includes(val)) return onChange(values.filter((v) => v !== val));
@@ -69,7 +72,7 @@ export const CheckboxGroupField = ({
   return (
     <fieldset
       disabled={disabled}
-      className={containerClassNames}
+      className={styles.container}
       {...htmlFieldSetProps}
       {...ariaAttributes}
     >
@@ -85,7 +88,7 @@ export const CheckboxGroupField = ({
           </div>
         </InputFieldLayout.LabelContainer>
         <InputFieldLayout.InputContainer inlineLabel={inlineLegend}>
-          <div className={optionsListClassNames}>
+          <div className={optionsListStyles}>
             {options.map((option) => (
               <CheckboxField
                 {...option}
@@ -110,13 +113,12 @@ export const CheckboxGroupField = ({
   );
 }
 
-const styles = {
+const stylesheet = {
   container: {
-    default: 'pr-4 border-r-4 rounded-sm border-transparent',
-    invalid: 'pr-4 border-r-4 rounded-sm border-red-300',
+    baseStyles: 'pr-4 border-r-4 rounded-sm',
+    default: 'border-transparent',
+    invalid: 'border-red-300',
   },
-  optionsList: {
-    default: 'divide-y divide-transparent',
-    divider: 'divide-y divide-gray-200',
-  },
+  withDivide: 'divide-y divide-gray-200',
+  hideDivide: 'divide-y divide-transparent',
 }

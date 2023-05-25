@@ -8,9 +8,9 @@ export interface CheckboxFieldProps extends CheckboxInputCoreProps {
   disabled?: boolean;
   readOnly?: boolean;
   checked?: boolean;
-  onChange?: () => void;
   alignCheckboxRight?: boolean;
   description?: string;
+  onChange?: () => void;
 }
 
 export const CheckboxField = ({
@@ -36,14 +36,15 @@ export const CheckboxField = ({
     return attrs;
   }, [ariaDescribedById, disabled, readOnly]);
 
-  const [containerClassNames, labelContainerClassNames] = React.useMemo(() => ([
-    alignCheckboxRight ? styles.container.rowReverse : styles.container.default,
-    alignCheckboxRight ? styles.labelContainer.rowReverse : styles.labelContainer.default,
-  ]), [alignCheckboxRight]);
+  const styles = React.useMemo(() => ({
+    ...stylesheet,
+    container: alignCheckboxRight ? stylesheet.container.rowReverse : stylesheet.container.default,
+    labelContainer: alignCheckboxRight ? stylesheet.labelContainer.rowReverse : stylesheet.labelContainer.default,
+  }), [alignCheckboxRight]);
 
 
   return (
-    <div className={containerClassNames}>
+    <div className={styles.container}>
       <CheckboxInput
         id={id}
         disabled={disabled}
@@ -52,7 +53,7 @@ export const CheckboxField = ({
         {...htmlInputProps}
         onChange={onChange}
       />
-      <div className={labelContainerClassNames}>
+      <div className={styles.labelContainer}>
         <label htmlFor={id} className={styles.label}>
           {label}
         </label>
@@ -66,7 +67,7 @@ export const CheckboxField = ({
   );
 }
 
-const styles = {
+const stylesheet = {
   container: {
     default: 'relative flex items-start py-2.5',
     rowReverse: 'relative flex items-start py-2.5 justify-between flex-row-reverse',

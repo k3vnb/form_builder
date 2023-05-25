@@ -19,12 +19,12 @@ const Container = ({
   children
 }: ContainerProps): JSX.Element => {
 
-  const containerClassNames = React.useMemo((): string => (
-    getContainerClassNames({ containerType, inlineLabel, hideLabel })
+  const containerStyles = React.useMemo((): string => (
+    getContainerStyles({ containerType, inlineLabel, hideLabel })
   ), [inlineLabel, containerType, hideLabel]);
 
   return (
-    <div className={containerClassNames}>
+    <div className={containerStyles}>
       {children}
     </div>
   );
@@ -40,7 +40,7 @@ export const InputFieldLayout = {
   InputContainer,
 }
 
-const styles = {
+const stylesheet = {
   mainContainer: {
     default: 'flex flex-col gap-2',
     hideLabel: '',
@@ -58,8 +58,8 @@ const styles = {
   },
 }
 
-const getContainerClassNames = ({ containerType, hideLabel, inlineLabel }: Omit<ContainerProps, 'children'>): string => {
-  const container = styles[containerType];
+const getContainerStyles = ({ containerType, hideLabel, inlineLabel }: Omit<ContainerProps, 'children'>): string => {
+  const container = stylesheet[containerType];
   
   if (inlineLabel && hideLabel) return container.hideLabel || container.inlineLabel;
   if (inlineLabel) return container.inlineLabel;
